@@ -814,7 +814,7 @@
 
 <body>
     <div class="main-panel">
-        @include('frontend.layouts.navbar')
+        
         <div class="container ">
             @yield('content')
         </div>
