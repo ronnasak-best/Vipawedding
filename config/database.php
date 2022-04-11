@@ -45,12 +45,12 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'url' => env('https://fast-savannah-75931.herokuapp.com/'),
-            'host' => env('us-cdbr-east-05.cleardb.net', '127.0.0.1'),
+            'url' => 'https://fast-savannah-75931.herokuapp.com/',
+            'host' => 'us-cdbr-east-05.cleardb.net', '127.0.0.1',
             'port' => env('DB_PORT', '3306'),
-            'database' => env('heroku_d27e2ab332cb0d2', 'forge'),
-            'username' => env('b36b815bec3ba1', 'forge'),
-            'password' => env('cef9c0b7', ''),
+            'database' => 'heroku_d27e2ab332cb0d2',
+            'username' => 'b36b815bec3ba1',
+            'password' => 'cef9c0b7',
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
