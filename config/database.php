@@ -45,7 +45,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'url' => 'https://fast-savannah-75931.herokuapp.com/',
+            'url' => 'https://fast-savannah-75931.herokuapp.com',
             'host' => 'us-cdbr-east-05.cleardb.net',
             'port' => '3306',
             'database' => 'heroku_d27e2ab332cb0d2',
