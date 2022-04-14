@@ -45,13 +45,13 @@
             <td>{{$product['p_color']}}</td>
             <td>{{$product['price']}}</td>
             <td>
-              <a href="{{action('GalleryController@show',$product['id'])}}" class="btn btn-inverse-primary btn-sm">Images</a>
+              <a href="{{route('Image-gallery.show',$product['id'])}}" class="btn btn-inverse-primary btn-sm">Images</a>
             </td>
             <td>
-              <a href="{{action('ProductAtrrController@show',$product['id'])}}" class="btn btn-inverse-success btn-sm">Add Attr</a>
+              <a href="{{route('product_atrr.show',$product['id'])}}" class="btn btn-inverse-success btn-sm">Add Attr</a>
             </td>
             <td>
-              <a href="{{action('ProductsController@edit',$product['id'])}}" class="btn btn-inverse-info btn-sm">Edit</a>
+              <a href="{{route('products.edit',$product['id'])}}" class="btn btn-inverse-info btn-sm">Edit</a>
               <a href="product/delete/{{$product['id']}}" class="delete-confirm btn btn-inverse-danger btn-sm">Delete</a>
                 {{csrf_field()}}
             </td>

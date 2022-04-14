@@ -14,22 +14,22 @@
       <table class="table "id="dynamic-row">
         <thead>
           <tr>
-            <th style="text-align: center; vertical-align: middle;">Order</th>
+            <th style="text-align: center; vertical-align: middle;">เลขที่</th>
             <th style="text-align: center; vertical-align: middle;">Date</th>
             <th style="text-align: center; vertical-align: middle;">Uplode Slip</th>
-            <th style="text-align: center; vertical-align: middle;">Subtotal</th>
-            <th style="text-align: center; vertical-align: middle;">delivery op</th>
+            <th style="text-align: center; vertical-align: middle;">จำนวนเงิน</th>
+            <th style="text-align: center; vertical-align: middle;">สถานะ</th>
             <th style="text-align: center; vertical-align: middle;">status</th>
           </tr>
         </thead>
         <tbody>
           @foreach($orders as $order)
           <tr>
-              <td style="text-align: center; vertical-align: middle;" > <a href="{{action('BackEndOrderController@show',$order['id'])}}">{{$order['id']}}</a> </td>
+              <td style="text-align: center; vertical-align: middle;" > <a href="{{route('orderss.show',$order['id'])}}">{{$order['id']}}</a> </td>
               <td style="text-align: center; vertical-align: middle;">{{$order['created_at']}}</td>
               <td style="text-align: center; vertical-align: middle;">
-
-                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ShowModal" data-whatever="{{$order['id']}}" data-img ="{{$order['image']}}">
+                @if($order['payment_slip']== true )
+                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ShowModal" data-whatever="{{$order['id']}}" data-img ="{{$order['payment_slip']}}">
                     View file
                 </button>
                 <!-- Modal -->
@@ -43,31 +43,31 @@
                         </button>
                       </div>
                       <div class="modal-body">
-                        <img class="img" src="{{url('/')}}/slip/{{$order['image']}}" alt="">
+                        <img class="img" src="{{url('/')}}/slip/{{$order['payment_slip']}}" alt="">
                       </div>
                     </div>
                   </div>
                 </div>
-
+                @endif
             </td>
 
               <td style="text-align: center; vertical-align: middle;"> {{$order['billing_total']}}</td>
-              <td style="text-align: center; vertical-align: middle;">{{$order['delivery_op']}}</td>
+              
               <td style="text-align: center; vertical-align: middle;">
-                @if($order['image']== true )
+                @if($order['payment_slip']== true )
                     @if($order['status'] == 1)
                       pending
                     @elseif($order['status'] == 2)
                       success
                     @endif
-                @else
-                    @if($order['status'] == 0)
+                @endif
+               </td>
+              <td style="text-align: center; vertical-align: middle;">
+                @if($order['status'] == 0)
                       Order canceled
                     @else
                       <a class=" btn btn-danger btn-sm cancel-confirm" href="orderss/cancel/{{$order['id']}}">Cancel</a>
                     @endif
-                @endif
-               </td>
           </tr>
           @endforeach
         </tbody>

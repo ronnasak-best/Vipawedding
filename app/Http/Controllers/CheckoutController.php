@@ -55,7 +55,7 @@ class CheckoutController extends Controller
         $order = Orders::create([
                 'id' => $id,
                 'user_id' => auth()->user()->id ,
-                'billing_name' => "$address->name $address->surname",
+                'billing_name' => "$address->name",
                 'billing_address' => "$address->address $address->subdistrict $address->district $address->province $address->pincode",
                 'billing_phone' => $address->mobile,
                 'startDate' => $request->startdate,

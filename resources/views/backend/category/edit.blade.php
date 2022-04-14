@@ -17,7 +17,7 @@
 <div class="col-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-      <form class="forms-sample" method="post" action="{{action('CategoryController@update',$cat['id'])}}">
+      <form class="forms-sample" method="post" action="{{route('category.update',$cat['id'])}}">
         <input type="hidden" name="_method" value="PATCH"/>
         {{csrf_field()}}
         <div class="form-group row">

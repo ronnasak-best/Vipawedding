@@ -16,7 +16,7 @@
 <div class="col-lg-12 grid-margin stretch-card">
   <div class="card">
     <div class="card-body">
-    <form  class="forms-sample" method="post" role="form" action="{{action('ProductAtrrController@update',$product['id'])}}">
+    <form  class="forms-sample" method="post" role="form" action="{{route('product_atrr.update',$product['id'])}}">
       <input type="hidden" name="_method" value="PATCH"/>
       {{csrf_field()}}
     <table class="table table-hover">

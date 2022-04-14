@@ -36,7 +36,7 @@
                 </div>
             </div>
             @if($order['status'] == 1)
-            @if($order['image_payment_return'] == false)
+            @if($order['payment_slip'] == false)
             <div class="button-attached">
                 <button type="button" class="btn btn-primary button primary btn-block mt-3" data-toggle="modal"
                     data-target="#UploadModal" data-whatever="{{$order['id']}}">แนบหลักฐานการโอนเงิน</button>
@@ -45,7 +45,7 @@
             <div class="button-attached">
                 <button type="button" class="btn btn-outline-secondary button primary btn-block mt-3"
                     data-toggle="modal" data-target="#ShowModal" data-whatever="{{$order['id']}}"
-                    data-img="{{$order->image_payment_return}}">หลักฐานการโอนเงิน</button>
+                    data-img="{{$order->payment_slip}}">หลักฐานการโอนเงิน</button>
             </div>
             @endif
             @endif
