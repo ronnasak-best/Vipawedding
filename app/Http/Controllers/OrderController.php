@@ -83,6 +83,7 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+     
         //$order_update = Orders::where('id_or',$id)->first();
         $this->validate($request,[
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -105,7 +106,7 @@ class OrderController extends Controller
   
             }
   
-            Orders::where('id',$id)->update(['payment_slip'=>$filename]);
+            Orders::where('id',$id)->update(['payment_slip'=>$filename,'status'=>2]);
   
   
           return redirect()->route('orders.index')->with('Thank you! Your payment has been successfully accepted!');

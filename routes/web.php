@@ -86,7 +86,8 @@ Route::group(['prefix'=>'admin','middleware'=>['auth:sanctum',config('jetstream.
     //Route::get('product_atrr/delete/{id}', 'ProductAtrrController@destroy');
     // //Order
     Route::resource('/orderss', BackEndOrderController::class);
-    // Route::get('orderss/cancel/{id}', 'BackEndOrderController@destroy');
+    Route::get('orderss/cancel/{id}', [BackEndOrderController::class,'disPayment']);
+    Route::get('orderss/payment_confirm/{id}', [BackEndOrderController::class,'payment_confirm']);
     // //ReturnPproducts
     Route::resource('/orders_re',ReturnProductsController::class);
     // //User

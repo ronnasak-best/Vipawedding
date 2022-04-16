@@ -38,32 +38,37 @@ class BackEndOrderController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        foreach ($request->id as $key => $value) {
-            $OrdersProduct = OrdersProduct::find($value);
-            if($request->status[$key] == 2){
-                if($request->tracking_no[$key] !='' ){
-                    $OrdersProduct->tracking_no = $request->tracking_no[$key];
-                    $OrdersProduct->status = 3;
-                }elseif($request->tracking_no[$key] =="") {
-                  $OrdersProduct->status = 2;
-                  $OrdersProduct->tracking_no = $request->tracking_no[$key];
-                }
-            }elseif ($request->status[$key] == 3) {
-                if($request->tracking_no[$key] =='' ){
-                    $OrdersProduct->tracking_no = $request->tracking_no[$key];
-                    $OrdersProduct->status = 2;
-                }else {
-                  $OrdersProduct->tracking_no = $request->tracking_no[$key];
-                  $OrdersProduct->status = 3;
-                }
-          }
-          $OrdersProduct->save();
-          }
+    {   
+        $order = Orders::find($request->id);
+        $order->status = $request->status;
+        $order->save();
+        return back();
+        
+        // foreach ($request->id as $key => $value) {
+        //     $OrdersProduct = OrdersProduct::find($value);
+        //     if($request->status[$key] == 2){
+        //         if($request->tracking_no[$key] !='' ){
+        //             $OrdersProduct->tracking_no = $request->tracking_no[$key];
+        //             $OrdersProduct->status = 3;
+        //         }elseif($request->tracking_no[$key] =="") {
+        //           $OrdersProduct->status = 2;
+        //           $OrdersProduct->tracking_no = $request->tracking_no[$key];
+        //         }
+        //     }elseif ($request->status[$key] == 3) {
+        //         if($request->tracking_no[$key] =='' ){
+        //             $OrdersProduct->tracking_no = $request->tracking_no[$key];
+        //             $OrdersProduct->status = 2;
+        //         }else {
+        //           $OrdersProduct->tracking_no = $request->tracking_no[$key];
+        //           $OrdersProduct->status = 3;
+        //         }
+        //   }
+        //   $OrdersProduct->save();
+        //   }
   
   
   
-          return back();
+        //   
     }
 
     /**
@@ -75,8 +80,6 @@ class BackEndOrderController extends Controller
     public function show(Orders $orderss)
     {
         $orderproduct = $orderss->ordersproduct ;
-
-
         //$ordersproduct = OrdersProduct::where('order_id',$id)->first();
         //dd($orderss);
         return view('backend.orders.order_details',compact('orderproduct','orderss'));
@@ -102,7 +105,7 @@ class BackEndOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       
     }
 
     /**
@@ -128,5 +131,20 @@ class BackEndOrderController extends Controller
       $order->status = 0;
       $order->save();
       return back();
+    }
+    public function payment_confirm($id)
+    {
+        $order = Orders::find($id);
+        $order->status = 3;
+        $order->save();
+        return back();
+    }
+    public function disPayment($id)
+    {
+        $order = Orders::find($id);
+        $order->payment_slip = '';
+        $order->status = 1;
+        $order->save();
+        return back();
     }
 }

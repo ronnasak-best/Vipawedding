@@ -42,6 +42,7 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
+       
         if($request->daterange=="")
         {
           return back()->with('message','Please select Size');
