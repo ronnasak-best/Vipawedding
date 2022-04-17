@@ -60,7 +60,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::resource('/check-out',CheckoutController::class);
     //Route::post('/payment','CheckoutController@payment');
     Route::resource('/orders', OrderController::class);
-    //Route::post('/order_return','OrderController@upload_return')->name('order.return');
+    Route::post('/order_return/{id}',[OrderController::class,'upload_return']);
     //Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
 });
 
@@ -88,6 +88,8 @@ Route::group(['prefix'=>'admin','middleware'=>['auth:sanctum',config('jetstream.
     Route::resource('/orderss', BackEndOrderController::class);
     Route::get('orderss/cancel/{id}', [BackEndOrderController::class,'disPayment']);
     Route::get('orderss/payment_confirm/{id}', [BackEndOrderController::class,'payment_confirm']);
+    Route::post('/orderss/{id}', [BackEndOrderController::class,'ship_track'])->name('orderss.ship_track');
+    Route::get('/orderss/order_back/{id}', [BackEndOrderController::class,'order_back']);
     // //ReturnPproducts
     Route::resource('/orders_re',ReturnProductsController::class);
     // //User

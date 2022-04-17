@@ -111,11 +111,11 @@ class OrderController extends Controller
   
           return redirect()->route('orders.index')->with('Thank you! Your payment has been successfully accepted!');
     }
-    public function upload_return(Request $request)
+    public function upload_return(Request $request, $id)
     {
+     
+    
       $id = $request->id;
-      //dd($id);
-
         //$order_update = Orders::where('id_or',$id)->first();
         $this->validate($request,[
           'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -137,8 +137,8 @@ class OrderController extends Controller
               }
 
           }
-          $status = 4;
-          OrdersProduct::where('id',$id)->update(['image'=>$filename,'status'=>$status]);
+          $status = 6;
+          Orders::where('id',$id)->update(['image_return_slip'=>$filename,'status'=>$status]);
 
 
         return back();

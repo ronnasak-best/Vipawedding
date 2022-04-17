@@ -17,7 +17,7 @@ class BackEndOrderController extends Controller
      */
     public function index()
     {
-        $orders = Orders::all()->toArray();
+        $orders = Orders::whereBetween('status',[0,4])->get();
         return view('backend.orders.index',compact('orders'));
     }
 
@@ -144,6 +144,23 @@ class BackEndOrderController extends Controller
         $order = Orders::find($id);
         $order->payment_slip = '';
         $order->status = 1;
+        $order->save();
+        return back();
+    }
+    public function ship_track(Request $request, $id)
+    {   
+        if($request->tracking_no_send !=''){
+            $order = Orders::find($id);
+            $order->tracking_no_send = $request->tracking_no_send;
+            $order->status = 4;
+            $order->save();
+        }
+        return back();       
+    }
+    public function order_back($id)
+    {
+        $order = Orders::find($id);
+        $order->status = 5;
         $order->save();
         return back();
     }

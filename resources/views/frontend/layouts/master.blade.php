@@ -105,6 +105,16 @@
         modal.find('.modal-title').text('Notification : Slip payment file Order number : ' + recipient);
        
     })
+    $('#returnModal').on('show.bs.modal', function(event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        let recipient = button.data('whatever') // Extract info from data-* attributes
+        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+        var modal = $(this)
+        document.getElementById("form_return").action = '/order_return' + '/' + recipient;
+        modal.find('.modal-title').text('Notification : Slip Shipping file Order number : ' + recipient);
+       
+    })
     $('#ShowModal').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var recipient = button.data('whatever') // Extract info from data-* attributes
@@ -115,7 +125,7 @@
         modal.find('.modal-title').text('Notification : Slip payment file Order number : ' + recipient)
         modal.find('.modal-body img').attr('src', '{{url('')}}/slip/' + img)
     })
-    $('#returnModal').on('show.bs.modal', function(event) {
+    $('#ShowreturnModal').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget) // Button that triggered the modal
         var recipient = button.data('whatever') // Extract info from data-* attributes
         var img_r = button.data('img_r')
@@ -152,10 +162,8 @@
     });
     </script>
     <script>
-    var msg = '{{Session::get('
-    message ')}}';
-    var exist = '{{Session::has('
-    message ')}}';
+    var msg = '{{Session::get('message ')}}';
+    var exist = '{{Session::has('message ')}}';
     if (exist) {
         alert(msg);
     }

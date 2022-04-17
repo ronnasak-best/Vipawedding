@@ -9,10 +9,12 @@
                             href="{{ route('orders.show', $order['id']) }}">#{{ $order['id'] }}</a></spam>
                 </div>
                 <div>
-                    @if ($order['status'] == 1)
+                    @if ($order['status'] == 1 || $order['status'] == 2)
                         <span class="btn-status status-waiting"> รอการชำระเงิน</span>
-                    @else
-                        <span class="btn-status status-done"> อยู่ระหว่างดำเนินงาน</span>
+                    @elseif ( $order['status'] == 3 || $order['status'] == 4)
+                        <span class="btn-status status-done"> อยู่ระหว่างการจัดส่ง</span>           
+                    @elseif ($order['status'] == 5)
+                        <span class="btn-status status-return"> รอการส่งกลับ</span>
                     @endif
                 </div>
             </div>
@@ -39,16 +41,22 @@
                     @if ($order['payment_slip'] == false && $order['status'] == 1)
                         <div class="button-attached">
                             <button type="button" class="btn btn-primary button primary btn-block mt-3" data-toggle="modal"
-                                data-target="#UploadModal" data-whatever="{{ $order['id'] }}">แนบหลักฐานการโอนเงิน</button>
+                                data-target="#UploadModal"
+                                data-whatever="{{ $order['id'] }}">แนบหลักฐานการโอนเงิน</button>
                         </div>
-                    @else
+                    @elseif($order['status'] == 2)
                         <div class="button-attached">
                             <button type="button" class="btn btn-outline-secondary button primary btn-block mt-3"
                                 data-toggle="modal" data-target="#ShowModal" data-whatever="{{ $order['id'] }}"
                                 data-img="{{ $order->payment_slip }}">หลักฐานการโอนเงิน</button>
                         </div>
-                    @endif
-
+                    @elseif($order['status'] == 5)
+                    <div class="button-attached">
+                        <button type="button" class="btn btn-primary button primary btn-block mt-3" data-toggle="modal"
+                            data-target="#returnModal"
+                            data-whatever="{{ $order['id'] }}">หลักฐานการจัดส่ง</button>
+                    </div>                   
+                    @endif               
                 </div>
             </div>
             <div class="bg-white order-list">
@@ -72,7 +80,7 @@
         </div>
     @endforeach
 
-    <!-- Modal -->
+    <!-- Modal Slip upload -->
     <div class="modal fade bd-example-modal-lg" id="UploadModal" tabindex="-1" role="dialog"
         aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
@@ -116,4 +124,32 @@
             </div>
         </div>
     </div>
+    <!-- Modal return-->
+    <div class="modal fade bd-example-modal-lg" id="returnModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="returnModalLabel"></h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="form_return" method="post" action="" enctype="multipart/form-data">
+                        @csrf                 
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label">Add file:</label>
+                            <div class="">
+                                <input type="file" name="image" class="form-control">
+                            </div>
+                            <button type="submit" class="btn btn-primary sm-8">upload</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
+
+

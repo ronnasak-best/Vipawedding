@@ -14,7 +14,7 @@
 </div>
 <div class="col-lg-12 grid-margin stretch-card">
   <div class="card">
-    <form class="" action="{{action('ReturnProductsController@update',$orders_re->id)}}" method="post" enctype="multipart/form-data">
+    <form class="" action="{{route('orders_re.update',$orders_re->id)}}" method="post" enctype="multipart/form-data">
       <input type="hidden" name="_method" value="PATCH"/>
       {{csrf_field()}}
     <div class="card-body">

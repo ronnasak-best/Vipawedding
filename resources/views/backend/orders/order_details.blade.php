@@ -17,93 +17,119 @@
     <div class="row">
         <div class="col-lg-6 grid-margin stretch-card">
             <div class="card">
-                <form class="forms-sample" method="post" action="{{ route('orderss.store') }}">
-                    <input type="hidden" name="id" value="{{ $orderss->id }}">
-                    {{ csrf_field() }}
-                    <div class="card-body">
-                        <div class="ordertitle">
-                            หมายเลขการเช่า : {{ $orderss->id }}
+                <div class="card-body">
+                    <div class="ordertitle">
+                        หมายเลขการเช่า : {{ $orderss->id }}
+                    </div>
+                    <hr style="border-top: 2px solid #eee;">
+                    <div class="orderhead">
+                        <div class="row mb-4">
+                            <div class="col-sm-6">
+                                <table>
+                                    <tbody>
+                                        <tr class="mb-2">
+                                            <td>วันที่เช่า : </td>
+                                            <td>&nbsp;&nbsp;{{ $orderss->startDate }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>วันที่คืน : </td>
+                                            <td>&nbsp;&nbsp;{{ $orderss->endDate }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <hr style="border-top: 2px solid #eee;">
-                        <div class="orderhead">
-                            <div class="row mb-4">
-                                <div class="col-sm-6">
-                                    <table>
-                                        <tbody>
-                                            <tr class="mb-2">
-                                                <td>วันที่เช่า : </td>
-                                                <td>&nbsp;&nbsp;{{ $orderss->startDate }}</td>
-                                            </tr>
-                                            <tr>
-                                                <td>วันที่คืน : </td>
-                                                <td>&nbsp;&nbsp;{{ $orderss->endDate }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                        <div class="status">
+                            <div style="align-items: center;" class=" row mb-4">
+                                <label class="ml-4 mb-0">สถานะ :</label>
+                                <div class="ml-4">
+                                    @if ($orderss->status == 1)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #212529; background-color: #ffc107;">รอชำระเงิน</span>
+                                    @elseif($orderss->status == 2)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #ff854a;">รอเช็คยอด</span>
+                                    @elseif($orderss->status == 3)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #17a2b8;">รอจัดส่ง</span>
+                                    @elseif($orderss->status == 4)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #28a745;">จัดส่งแล้ว</span>
+                                    @elseif($orderss->status == 5)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #963859;">รอการส่งคืน</span>
+                                    @endif
                                 </div>
                             </div>
-                            <div class="status">
-                                <div style="align-items: center;" class=" row mb-4">
-                                    <label class="ml-4 mb-0">สถานะ :</label>
-                                    <div class="ml-4">
-                                        @if ($orderss->status == 1)
-                                            <span class="btn btn-rounded btn-sm"
-                                                style="color: #212529; background-color: #ffc107;">รอชำระเงิน</span>
-                                        @elseif($orderss->status == 2)
-                                            <span class="btn btn-rounded btn-sm"
-                                                style="color: #ffffff; background-color: #ff854a;">รอเช็คยอด</span>
-                                        @elseif($orderss->status == 3)
-                                        <span class="btn btn-rounded btn-sm"
-                                        style="color: #ffffff; background-color: #17a2b8;">รอจัดส่ง</span>
-                                        @endif
-                                    </div>
-                                </div>
-                                <div class="payment_confirm row">
-                                    @if ($orderss['payment_slip'] == true && $orderss['status'] == 2)
-                                        <button type="button" class="btn btn-outline-info btn-fw col-sm-5 ml-4"
-                                            data-toggle="modal" data-target="#ShowModal"
-                                            data-whatever="{{ $orderss['id'] }}">
-                                            หลักฐานการโอนเงิน
-                                        </button>
-                                        <!-- Modal -->
-                                        <div class="modal fade bd-example-modal-lg" id="ShowModal" tabindex="-1"
-                                            role="dialog" aria-labelledby="ShowModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-lg" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h6 class="modal-title" id="ShowModalLabel"></h6>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <img class="img"
-                                                            src="{{ url('/') }}/slip/{{ $orderss['payment_slip'] }}"
-                                                            alt="">
-                                                    </div>
+                            <div class="payment_confirm row">
+                                @if ($orderss['payment_slip'] == true && $orderss['status'] == 2)
+                                    <button type="button" class="btn btn-outline-info btn-fw col-sm-5 ml-4"
+                                        data-toggle="modal" data-target="#ShowModal" data-whatever="{{ $orderss['id'] }}">
+                                        หลักฐานการโอนเงิน
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade bd-example-modal-lg" id="ShowModal" tabindex="-1" role="dialog"
+                                        aria-labelledby="ShowModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h6 class="modal-title" id="ShowModalLabel"></h6>
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <img class="img"
+                                                        src="{{ url('/') }}/slip/{{ $orderss['payment_slip'] }}"
+                                                        alt="">
                                                 </div>
                                             </div>
                                         </div>
-                                        <a href="payment_confirm/{{ $orderss['id'] }}" style="color: #28a745;border-color: #28a745;font-size:18px" type="button"
-                                            class=" ml-5 btn btn-sm btn-icon-text">
-                                            <i class="mdi mdi-check-circle mdi-20px btn-icon-prepend"></i> ยืนยัน </a>
-                                        <a href="cancel/{{ $orderss['id'] }}"
-                                            style="color: #dc3545;border-color: #dc3545;font-size:18px" type="button"
-                                            class=" ml-2 btn btn-sm btn-icon-text">
-                                            <i class="mdi mdi-close-box mdi-20px btn-icon-prepend"></i> ปฏิเสธ </a>
-                                    @endif
-                                </div>
-                                @if ($orderss['status'] == 3)
-                                    <div class="form-group row mt-3">
-                                        <label class="col-sm-2 col-form-label">เลขพัสดุ :</label>
-                                        <input type="text" class="form-control col-sm-5" name="tracking_no_send">
                                     </div>
+                                    <a href="payment_confirm/{{ $orderss['id'] }}"
+                                        style="color: #28a745;border-color: #28a745;font-size:18px" type="button"
+                                        class=" ml-5 btn btn-sm btn-icon-text">
+                                        <i class="mdi mdi-check-circle mdi-20px btn-icon-prepend"></i> ยืนยัน </a>
+                                    <a href="cancel/{{ $orderss['id'] }}"
+                                        style="color: #dc3545;border-color: #dc3545;font-size:18px" type="button"
+                                        class=" ml-2 btn btn-sm btn-icon-text">
+                                        <i class="mdi mdi-close-box mdi-20px btn-icon-prepend"></i> ปฏิเสธ </a>
                                 @endif
                             </div>
+                            @if ($orderss['status'] == 3)
+                                <form action="{{ route('orderss.ship_track', $orderss['id']) }}" method="post">
+                                    {{ csrf_field() }}
+                                    <div class="form-group row mt-3">
+                                        <label class="ml-2 col-sm-2 col-form-label">เลขพัสดุ :</label>
+                                        <input type="text" class="form-control col-sm-5" name="tracking_no_send">
+                                    </div>
+                                    <div class="row justify-content-center">
+                                        <div class="col-sm-3">
+                                            <button style="color: #28a745;border-color: #28a745;font-size:18px"
+                                                type="submit" class="btn btn-sm btn-icon-text">
+                                                <i class="mdi mdi-check-circle mdi-20px btn-icon-prepend"></i> ยืนยัน
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            @endif
+                            @if ($orderss['status'] == 4)
+                                <div class="form-group row mt-2">
+                                    <label class="ml-2 col-sm-2 col-form-label">เลขพัสดุ :</label>
+                                    <input type="text" class="form-control col-sm-5" name="tracking_no_send"
+                                        value="{{ $orderss['tracking_no_send'] }}" disabled>
+                                </div>
+                                <a href="order_back/{{ $orderss['id'] }}"
+                                    style="color: #28a745;border-color: #28a745;font-size:18px" type="button"
+                                    class=" ml-2 btn btn-sm btn-icon-text">
+                                    <i class="mdi mdi-close-box mdi-20px btn-icon-prepend"></i> สินค้าจัดส่งสำเร็จ
+                                    รอการส่งกลับ </a>
+                            @endif
                         </div>
                     </div>
-                </form>
+                </div>
+
             </div>
         </div>
         <div class="col-lg-4 grid-margin stretch-card">
@@ -182,7 +208,8 @@
                                             style="width: 100px; height:150px" class="rounded">
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;">
-                                        <a>{{ $value->product['p_code'] }}</a></td>
+                                        <a>{{ $value->product['p_code'] }}</a>
+                                    </td>
                                     <td style="text-align: center; vertical-align: middle;"><a>{{ $value->size }}</a><br>
                                     </td>
                                     <td style="text-align: center; vertical-align: middle;"></td>

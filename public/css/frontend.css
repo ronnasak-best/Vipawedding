@@ -513,6 +513,10 @@ input::-webkit-inner-spin-button {
     background-color: #32B657;
     color: white;
 }
+.btn-status.status-return {
+    background-color: #dc3545;
+    color: white;
+}
 
 .card-order-header {
     display: flex;

@@ -17,7 +17,7 @@ class ReturnProductsController extends Controller
      */
     public function index()
     {
-        $orders = Orders::where('status','!=',0)->get();
+        $orders = Orders::whereBetween('status',[5,8])->get();
         //  dd($orders);
           return view('backend.orders.return_pro',compact('orders'));
     }
@@ -49,7 +49,7 @@ class ReturnProductsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Orders $orders_re)
     {
         $orderproduct = $orders_re->ordersproduct ;
         //$ordersproduct = OrdersProduct::where('order_id',$id)->first();

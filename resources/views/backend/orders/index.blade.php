@@ -36,6 +36,12 @@
                                     @elseif($order['status'] == 3)
                                         <span class="btn btn-rounded btn-sm"
                                             style="color: #ffffff; background-color: #17a2b8;">รอจัดส่ง</span>
+                                    @elseif($order['status'] == 4)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #28a745;">จัดส่งแล้ว</span>
+                                    @elseif($order['status'] == 5)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #963859;">รอการส่งคืน</span>
                                     @endif
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;"> <a
