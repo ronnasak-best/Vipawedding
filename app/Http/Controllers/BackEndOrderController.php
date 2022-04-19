@@ -116,21 +116,19 @@ class BackEndOrderController extends Controller
      */
     public function destroy($id)
     {
-        $order_product = OrdersProduct :: where('order_id',$id)->get();
-      foreach ($order_product as $order_p) {
-        $order_p->status = 0;
-        $order_p->save();
-        $product_atrr = ProductAtrr::where('products_id',$order_p->product_id)
-                                    ->where('size',$order_p->size)
-                                    ->first();
-
-        $product_atrr->stock = $product_atrr->stock + $order_p->quantity;
-        $product_atrr->save();
-      }
-      $order = Orders::find($id);
-      $order->status = 0;
-      $order->save();
-      return back();
+        
+        $orders_product = OrdersProduct::where('order_id',$id)->get(); 
+        foreach ($orders_product as $key => $value) {
+            $product_atrr= ProductAtrr::where('products_id',$value->product_id)
+                                              ->where('size',$value->size)
+                                              ->first();                                        
+            $product_atrr->stock = $product_atrr->stock + 1;
+            $product_atrr->save();                                    
+        }
+        $order = Orders::find($id);
+        $order->status = 0;
+        $order->save();
+        return back();
     }
     public function payment_confirm($id)
     {

@@ -14,7 +14,7 @@ class Orders extends Model
     protected $keyType = 'string';
     protected $fillable = [
         'id','user_id','billing_name','billing_address','billing_phone'
-        ,'startDate','endDate','late','other_fine','billing_subtotal','billing_deposit','billing_refund','billing_total'
+        ,'startDate','endDate','late','detail_fine','other_fine','billing_subtotal','billing_deposit','billing_refund','billing_total'
         ,'account_name','account_no','bank_name'
         ,'tracking_no_send','image_payment_return','image_return_slip','payment_slip','status'
         

@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string('endDate');
             $table->integer('late');
             $table->integer('other_fine');
+            $table->string('detail_fine');
+            
             $table->integer('billing_subtotal');
             $table->integer('billing_deposit');
             $table->integer('billing_refund');

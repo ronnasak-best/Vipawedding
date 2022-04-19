@@ -1,180 +1,230 @@
 @extends('backend.layouts.master')
 @section('content')
-<div class="page-header">
-  <div class="row">
-    <h3 class="page-title col-sm-2">
-      <span class="page-title-icon bg-gradient-primary text-white mr-2">
-        <i class="mdi mdi-library-books"></i>
-      </span></h3>
-      <ol class="breadcrumb col-sm-10">
-        <h2 class="breadcrumb-item"><a href="{{route('orders_re.index')}}">Return products</a></h2>
-        <h2 class="breadcrumb-item active" aria-current="page">order details</h2>
-      </ol>
-  </div>
-</div>
-<div class="col-lg-12 grid-margin stretch-card">
-  <div class="card">
-    <form class="" action="{{route('orders_re.update',$orders_re->id)}}" method="post" enctype="multipart/form-data">
-      <input type="hidden" name="_method" value="PATCH"/>
-      {{csrf_field()}}
-    <div class="card-body">
-      <div class="ordertitle">
-          ORDER NUMBER : {{$orders_re->id}}
-      </div>
-      <hr style="border-top: 2px solid #eee;">
-      <div class="orderhead row">
-        <div class="col-sm-7">
-          <h5> Shipping address :: {{$orders_re->delivery_op}}</h5> <br>
-          <table>
-            <tbody>
-              <tr>
-                <td>Name : </td>
-                <td>&nbsp;&nbsp;{{$orders_re->billing_name}} {{$orders_re->billing_surname}}</td>
-              </tr>
-              <tr>
-                <td>Address : </td>
-                <td>&nbsp;&nbsp;{{$orders_re->billing_address}} ต.{{$orders_re->billing_sub_district}}	อ.{{$orders_re->billing_district}}</td>
-              </tr>
-              <tr>
-                <td></td>
-                <td>&nbsp;&nbsp;จ.{{$orders_re->billing_province}} {{$orders_re->billing_pincode}}</td>
-              </tr>
-              <tr>
-                <td>Phone : </td>
-                <td>&nbsp;&nbsp;{{$orders_re->billing_phone}}</td>
-              </tr>
-            </tbody>
-          </table>
+    <div class="page-header">
+        <div class="row">
+            <h3 class="page-title col-sm-3">
+                <span class="page-title-icon bg-gradient-primary text-white mr-2">
+                    <i class="mdi mdi-library-books"></i>
+                </span>
+            </h3>
+            <ol class="breadcrumb col-sm-9">
+                <h2 class="breadcrumb-item"><a href="{{ route('orders_re.index') }}">Orders</a></h2>
+                <h2 class="breadcrumb-item active" aria-current="page">order details</h2>
+            </ol>
         </div>
-        <div class="col-sm-5">
-          <h5> Account</h5> <br>
-          <table>
-            <tbody>
-              <tr>
-                <td>Bank Name : </td>
-                <td>&nbsp;&nbsp;{{$orders_re->bank_name}}</td>
-              </tr>
-              <tr>
-                <td>Account Name : </td>
-                <td>&nbsp;&nbsp;{{$orders_re->account_name}}</td>
-              </tr>
-              <tr>
-                <td>Account No.</td>
-                <td>&nbsp;&nbsp;{{$orders_re->account_no}} </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <br><hr style="border-top: 2px solid #eee;">
-      <table class="table">
-        <thead>
-          <tr>
-            <th style="text-align: center; vertical-align: middle;">Order</th>
-            <th style="text-align: center; vertical-align: middle;">details</th>
-            <th style="text-align: center; vertical-align: middle;">Uplode Slip</th>
-            <th style="text-align: center; vertical-align: middle;">status</th>
-            <th style="text-align: center; vertical-align: middle;">Late</th>
-              <th style="text-align: center; vertical-align: middle;">Other</th>
-
-          </tr>
-        </thead>
-        <tbody>
-            {{csrf_field()}}
-          @foreach($orderproduct as $key => $value)
-
-              <tr>
-                  <td style="width:100px;">
-                      <img src="{{url('/')}}/products/{{$value->product['image']}}" style="width: 80px; height:100px" class="rounded">
-                  </td>
-                  <td>
-                    <div class="product-detail" style="text-align: left;">
-                      <spam>{{$value->product['p_name']}}</spam><br>
-                      <a>CODE : {{$value->product['p_code']}}</a><br>
-                      <a>SIZE : {{$value->size}}</a><br>
-                      <a>FROM : {{$value->startDate}}</a><br>
-                      <a>TO : {{$value->endDate}}</a>
-                    </div>
-
-                  </td>
-                  <td style="text-align: center; vertical-align: middle; ">
-                    @if($value->image==true)
-                        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#returnModal" data-whatever="" data-img_r="{{$value->image}}">
-                            View file
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade bd-example-modal-lg" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h6 class="modal-title" id="returnModalLabel"></h6>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body img">
-                                <img src="" style="width: 80%; height:80%"  alt="" >
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                    @endif
-                  </td>
-
-
-                  <td  style="text-align: center; vertical-align: middle;">
-                    @if($value->status==5)
-                      Success
-                    @else
-                      <input type="hidden" name="id[]" value="{{$value->id}}">
-                      <select class="form-control form-control-sm name" name="status[]">
-                          <option value="4" {{($value->status==4)?' selected':''}}>Waiting Return</option>
-                          <option value="5" {{($value->status==5)?' selected':''}}>Success</option>
-                      </select>
-                    @endif
-
-
-                  </td>
-                  <td  style="text-align: center; vertical-align: middle;">
-                  @if($value->status==5)
-                    {{$value->late}}
-                  @else
-                    <select class="form-control form-control-sm num" name="late[]">
-
-                    </select>
-                  </td>
-                  @endif
-                  <td style="text-align: center; vertical-align: middle;">
-                    @if($value->status==5)
-                    {{$value->other_fine}}
-                    @else
-                    <input type="text" id="other_fine" class="form-control sm" name="other_fine[]"  size="5" value="" placeholder="฿">
-
-                  </td>
-                  @endif
-                  <td style="text-align: center; vertical-align: middle;">
-                    @if($value->status==5)
-                    {{$value->fine_detail}}
-                    @else
-                    <textarea type="text" class="form-control" name="fine_detail[]" value="" rows="4"> </textarea>
-                    @endif
-                  </td>
-              </tr>
-          @endforeach
-        </tbody>
-      </table>
-        <input class="btn btn-danger float-right"type="submit" name="" value="update" ><br>
     </div>
-    </form>
-  </div>
-</div>
-<script>
-$(function(){
-    var $select = $(".num");
-    for (i=0;i<=31;i++){
-        $select.append($('<option></option>').val(i).html(i))
-    }
-})
-</script>
+    <div class="row">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="ordertitle">
+                        หมายเลขการเช่า : {{ $orders_re->id }}
+                    </div>
+                    <hr style="border-top: 2px solid #eee;">
+                    <div class="orderhead">
+                        <div class="row mb-4">
+                            <div class="col-sm-5">
+                                <table>
+                                    <tbody>
+                                        <tr class="mb-2">
+                                            <td>วันที่เช่า : </td>
+                                            <td>&nbsp;&nbsp;{{ $orders_re->startDate }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td>วันที่คืน : </td>
+                                            <td>&nbsp;&nbsp;{{ $orders_re->endDate }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-6">
+                                <table>
+                                    <tbody>
+                                        <tr class="mb-2">
+                                            <td>ค่าเช่า : </td>
+                                            <td>&nbsp;&nbsp;฿ {{ $orders_re->billing_subtotal }}</td>
+                                        </tr>
+                                        @if ($orders_re['status'] == 7)
+                                        <tr>
+                                            <td style="color: #ff0000;font-size: 18px;">เงินคืนค่ามัดจำ(หักค่าปรับ) : </td>
+                                            <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿ {{ $orders_re->billing_refund }}</td>
+                                        </tr>
+                                        @elseif($orders_re['status'] == 6) 
+                                        <tr>
+                                            <td style="color: #ff0000;font-size: 18px;">เงินค่ามัดจำ : </td>
+                                            <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿ {{ $orders_re->billing_deposit }}</td>
+                                        </tr>
+                                        @endif
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="status">
+                            <div style="align-items: center;" class=" row mb-4">
+                                <label class="ml-4 mb-0">สถานะ :</label>
+                                <div class="ml-4 col-sm-4">
+                                    @if ($orders_re['status'] == 5)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #dc3545;">รอการส่งคืน</span>
+                                    @elseif($orders_re['status'] == 6)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #212529; background-color: #ffc107;">รอตรวจสอบชุด</span>
+                                    @elseif($orders_re['status'] == 7)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #17a2b8;">รอคืนเงิน</span>
+                                    @endif
+                                </div>
+                                @if ($orders_re['image_return_slip'] == true && $orders_re['status'] == 6)
+                                    <div class="col-sm-5">
+                                        <button type="button" class="btn btn-outline-info btn-fw " data-toggle="modal"
+                                            data-target="#ShowreturnModal" data-whatever="{{ $orders_re['id'] }}">
+                                            หลักฐานการจัดส่ง
+                                        </button>
+                                    </div>
+                                @endif
+                            </div>
+                            @if ($orders_re['image_return_slip'] == true && $orders_re['status'] == 6)
+                                <div class="payment_confirm row">
+                                    <form action="{{ route('orders_re.update', $orders_re['id']) }}" method="post">
+                                        {{ method_field('PATCH') }}
+                                        @csrf
+                                        <!-- Modal -->
+                                        <div class="modal fade bd-example-modal-lg" id="ShowreturnModal" tabindex="-1"
+                                            role="dialog" aria-labelledby="ShowModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h6 class="modal-title" id="ShowModalLabel"></h6>
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <img class="img"
+                                                            src="{{ url('/') }}/slipShipping/{{ $orders_re['image_return_slip'] }}"
+                                                            alt="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> <!-- END Modal -->
+                                </div> <!-- payment_confirm -->
+                                <div class="form-group row mt-2">
+                                    <label class="ml-2 col-sm-3 col-form-label">จำนวนวันคืนล่าช้า :</label>
+                                    <div class="col-sm-2 pl-0">
+                                        <select class="form-control" name="late">
+                                            @for ($i = 0; $i <= 31; $i++)
+                                                <option value="{{ $i }}">{{ $i }}</option>
+                                            @endfor
+                                        </select>
+                                    </div>
 
+                                </div>
+                                <div class="form-group row">
+                                    <label class="ml-2 col-sm-3 col-form-label">ค่าปรับชุดชำรุด:</label>
+                                    <input type="number" class="form-control col-sm-5" name="other_fine">
+                                </div>
+                                <div class=" row justify-content-end">
+                                    <button style="color: #28a745;border-color: #28a745;font-size:18px" type="submit"
+                                        class=" mr-5 btn btn-sm btn-icon-text">
+                                        <i class="mdi mdi-check-circle mdi-20px btn-icon-prepend"></i> ยืนยัน </button>
+                                </div>
+                                </form>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="ordertitle">
+                        รายละเอือดการจัดส่ง
+                    </div>
+                    <hr style="border-top: 2px solid #eee;">
+                    <div class="orderhead row">
+                        <div class="col-sm-12">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>ชื่อ : </td>
+                                        <td>&nbsp;&nbsp;{{ $orders_re->billing_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ที่อยู่จัดส่ง : </td>
+                                        <td>&nbsp;&nbsp;{{ $orders_re->billing_address }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>เบอร์โทร : </td>
+                                        <td>&nbsp;&nbsp;{{ $orders_re->billing_phone }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr style="border-top: 2px solid #eee;">
+                        </div>
+
+                        <div class="col-sm-12">
+                            <h5> Account</h5>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>Bank Name : </td>
+                                        <td>&nbsp;&nbsp;{{ $orders_re->bank_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Account Name : </td>
+                                        <td>&nbsp;&nbsp;{{ $orders_re->account_name }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Account No.</td>
+                                        <td>&nbsp;&nbsp;{{ $orders_re->account_no }} </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-10 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">รายการสินค้า</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center; vertical-align: middle;">ภาพ</th>
+                                <th style="text-align: center; vertical-align: middle;">รหัสชุด</th>
+                                <th style="text-align: center; vertical-align: middle;">ขนาดชุด</th>
+                                <th style="text-align: center; vertical-align: middle;">รายละเอียดชุดชำรุด</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($orderproduct as $key => $value)
+                                <tr>
+                                    <td style="width:100px;">
+                                        <img src="{{ url('/') }}/products/{{ $value->product['image'] }}"
+                                            style="width: 100px; height:150px" class="rounded">
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <a>{{ $value->product['p_code'] }}</a>
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle;"><a>{{ $value->size }}</a><br>
+                                    </td>
+                                    <td style="text-align: center; vertical-align: middle;">
+                                        <textarea class="form-control" id="detail_fine" rows="4"></textarea>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

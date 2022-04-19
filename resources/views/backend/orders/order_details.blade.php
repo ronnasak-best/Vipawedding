@@ -43,7 +43,10 @@
                             <div style="align-items: center;" class=" row mb-4">
                                 <label class="ml-4 mb-0">สถานะ :</label>
                                 <div class="ml-4">
-                                    @if ($orderss->status == 1)
+                                    @if ($orderss->status == 0)
+                                    <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #6c757d;">ยกเลิก</span>
+                                    @elseif ($orderss->status == 1)
                                         <span class="btn btn-rounded btn-sm"
                                             style="color: #212529; background-color: #ffc107;">รอชำระเงิน</span>
                                     @elseif($orderss->status == 2)

@@ -42,13 +42,14 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-       
+     
         if($request->daterange=="")
         {
           return back()->with('message','Please select Size');
         }
         $address = Address::find($request->address);
         //$total = Cart::Subtotal() *2;
+        $subtotal = (int)filter_var(Cart::Subtotal(), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $total = 2 *(float)filter_var(Cart::Subtotal(), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         //dd((double)$total);
         $id = IdGenerator::generate(['table' => 'orders', 'length' => 10, 'prefix' => 'WD']);
@@ -64,9 +65,9 @@ class CheckoutController extends Controller
                 'bank_name' => $address->txtBank,
                 'account_name' => $address->account_name,
                 'account_no' => $address->account_no,
-                'billing_subtotal' => Cart::Subtotal(),
-                'billing_deposit'=> Cart::Subtotal(),
-                'billing_refund' =>Cart::Subtotal(),
+                'billing_subtotal' => $subtotal,
+                'billing_deposit'=> $subtotal,
+                'billing_refund' => $subtotal,
                 'billing_total' => $total,
             ]);
 

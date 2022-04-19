@@ -27,7 +27,10 @@
                         @foreach ($orders as $order)
                             <tr>
                                 <td style="text-align: center; vertical-align: middle;">
-                                    @if ($order['status'] == 1)
+                                    @if ($order['status'] == 0)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #6c757d;">ยกเลิก</span>
+                                    @elseif ($order['status'] == 1)
                                         <span class="btn btn-rounded btn-sm"
                                             style="color: #212529; background-color: #ffc107;">รอชำระเงิน</span>
                                     @elseif($order['status'] == 2)
@@ -79,9 +82,9 @@
                                     @endif
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;">
-                                    @if ($order['payment_slip'] != true)
+                                    @if ($order['payment_slip'] != true && $order['status'] == 1)
                                         <a class=" btn btn-danger btn-sm cancel-confirm"
-                                            href="orderss/cancel/{{ $order['id'] }}">Cancel</a>
+                                            href="{{route('orderss.destroy',$order['id'])}}">ยกเลิก</a>                                           
                                     @endif
                             </tr>
                         @endforeach
@@ -94,19 +97,21 @@
         $('.cancel-confirm').on('click', function(event) {
             event.preventDefault();
             const url = $(this).attr('href');
-            swal({
+            Swal.fire({
                 title: "Are you sure?",
                 text: "Your will cancel order :: {{ $order['id'] }}",
-                buttons: true,
-                dangerMode: true,
-            }).then(function(value) {
-                if (value) {
-                    swal("Poof! Your imaginary file has been deleted!", {
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    Swal.fire("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                     });
                     window.location.href = url;
                 } else {
-                    swal("Your imaginary file is safe!");
+                    Swal.fire("Your imaginary file is safe!");
                 }
             });
         });

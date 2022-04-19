@@ -77,47 +77,67 @@ class ReturnProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        foreach ($request->id as $key => $value) {
-            $fine = $request->late[$key] * 500;
-            $other_fine = $request->other_fine[$key];
-            if($request->status[$key] == 5){
-              $orders_product = OrdersProduct::find($value);
-              $orders_product->status = 5;
-              $orders_product->late = $request->late[$key];
-              $orders_product->other_fine = $request->other_fine[$key];
-              $orders_product->fine_detail = $request->fine_detail[$key];
-              $orders_product->save();
-              $product_atrr = ProductAtrr::where('products_id',$orders_product->product_id)
-                                          ->where('size',$orders_product->size)
-                                          ->first();
-              $product_atrr->stock = $product_atrr->stock + $orders_product->quantity;
-              $product_atrr->save();
-              $order = Orders::find($id);
-              $order->billing_refund = $order->billing_refund-$fine;
-              $order->billing_refund = $order->billing_refund-$other_fine ;
-              if($order->billing_refund <= 0){
-                $order->billing_refund = 0 ;
-                $order->save();
-              }else {
-                $order->save();
-              }
+    {   
+        $fine = $request->late * 100;
+        $order = Orders::find($id);
+        $billing_deposit = $order->billing_deposit;
+        if($order->status == 6){
+            $order->billing_refund = ($billing_deposit - $fine) - $request->other_fine;
+          }
+        $order->other_fine = $request->other_fine;
+        $order->late = $request->late;
+        $order->status = 7;
+        $order->save();
+
+        $orders_product = OrdersProduct::where('order_id',$id)->get(); 
+
+        foreach ($orders_product as $key => $value) {
+            $product_atrr= ProductAtrr::where('products_id',$value->product_id)
+                                              ->where('size',$value->size)
+                                              ->first();                                        
+            $product_atrr->stock = $product_atrr->stock + 1;
+            $product_atrr->save();                                    
+        }
+        // foreach ($request->id as $key => $value) {
+        //     $fine = $request->late[$key] * 500;
+        //     $other_fine = $request->other_fine[$key];
+        //     if($request->status[$key] == 5){
+        //       $orders_product = OrdersProduct::find($value);
+        //       $orders_product->status = 5;
+        //       $orders_product->late = $request->late[$key];
+        //       $orders_product->other_fine = $request->other_fine[$key];
+        //       $orders_product->fine_detail = $request->fine_detail[$key];
+        //       $orders_product->save();
+        //       $product_atrr = ProductAtrr::where('products_id',$orders_product->product_id)
+        //                                   ->where('size',$orders_product->size)
+        //                                   ->first();
+        //       $product_atrr->stock = $product_atrr->stock + $orders_product->quantity;
+        //       $product_atrr->save();
+        //       $order = Orders::find($id);
+        //       $order->billing_refund = $order->billing_refund-$fine;
+        //       $order->billing_refund = $order->billing_refund-$other_fine ;
+        //       if($order->billing_refund <= 0){
+        //         $order->billing_refund = 0 ;
+        //         $order->save();
+        //       }else {
+        //         $order->save();
+        //       }
   
-            }
-          }
-        $orders_product = OrdersProduct::where('order_id',$id)->get();
-        $count = count($orders_product);
-        $num = 0;
-        foreach ($orders_product  as $order) {
-          if($order->status == 5){
-            $num++;
-          }
-        }
-        if($count == $num){
-          $order = Orders::find($id);
-          $order->status = 2;
-          $order->save();
-        }
+        //     }
+        //   }
+        
+        // $count = count($orders_product);
+        // $num = 0;
+        // foreach ($orders_product  as $order) {
+        //   if($order->status == 5){
+        //     $num++;
+        //   }
+        // }
+        // if($count == $num){
+        //   $order = Orders::find($id);
+        //   $order->status = 2;
+        //   $order->save();
+        // }
           return back();
     }
 
