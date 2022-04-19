@@ -182,19 +182,18 @@
                             </div>
                             <div class="col-sm-6 px-4">
                                 <label style="margin-bottom: 0.5px;">ชื่อบัญชี</label>
-                                <input type="text" class="form-control" name="bank_name"
-                                    aria-describedby="emailHelp">
+                                <input type="text" class="form-control" name="bank_name" aria-describedby="emailHelp">
                             </div>
                             <div class="col-sm-6 px-4 py-4">
                                 <label style="margin-bottom: 0.5px;">เลขที่บัญชี</label>
-                                <input type="text" class="form-control" name="bank_number"
-                                    aria-describedby="emailHelp">
+                                <input type="text" class="form-control" name="bank_number" aria-describedby="emailHelp">
                             </div>
                             <div class="col-sm-12 px-4 ">
                                 <label style="margin-bottom: 0.5px;">Add file:</label>
-                                <input type="file" name="image" class="form-control">                           
+                                <input type="file" name="image" class="form-control">
+                                <input type="file" name="image_test" id="upload" required>
                             </div>
-                        </div>                      
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" data-dismiss="modal" class="btn btn-danger sm-8 ">ยกเลิก</button>
@@ -221,4 +220,5 @@
             </div>
         </div>
     </div>
+    
 @endsection

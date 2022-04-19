@@ -20,7 +20,7 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('easyzoom/css/easyzoom.css')}}" />
+    <link rel="stylesheet" href="{{ asset('easyzoom/css/easyzoom.css') }}" />
 
     <!-- datepicker-->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -29,6 +29,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('css/frontend.css') }}">
+    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+        rel="stylesheet" />
 
 </head>
 
@@ -43,140 +46,165 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
     </script>
-    <script src="{{asset('frontend/js/main.js')}}"></script>
-    <script src="{{asset('easyzoom/js/easyzoom.js')}}"></script>
+    <script src="{{ asset('frontend/js/main.js') }}"></script>
+    <script src="{{ asset('easyzoom/js/easyzoom.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+
+
     <script>
-    // Instantiate EasyZoom instances
-    var $easyzoom = $('.easyzoom').easyZoom();
+        // Instantiate EasyZoom instances
+        var $easyzoom = $('.easyzoom').easyZoom();
 
-    // Setup thumbnails example
-    var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
+        // Setup thumbnails example
+        var api1 = $easyzoom.filter('.easyzoom--with-thumbnails').data('easyZoom');
 
-    $('.thumbnails').on('click', 'a', function(e) {
-        var $this = $(this);
+        $('.thumbnails').on('click', 'a', function(e) {
+            var $this = $(this);
 
-        e.preventDefault();
-
-        // Use EasyZoom's `swap` method
-        api1.swap($this.data('standard'), $this.attr('href'));
-    });
-
-    // Setup toggles example
-    var api2 = $easyzoom.filter('.easyzoom--with-toggle').data('easyZoom');
-
-    $('.toggle').on('click', function() {
-        var $this = $(this);
-
-        if ($this.data("active") === true) {
-            $this.text("Switch on").data("active", false);
-            api2.teardown();
-        } else {
-            $this.text("Switch off").data("active", true);
-            api2._init();
-        }
-    });
-    </script>
-    <script>
-    $(document).hover('click', '.dropdown-menu', function(e) {
-        e.stopPropagation();
-    });
-    // make it as accordion for smaller screens
-    if ($(window).width() < 992) {
-        $('.dropdown-menu a').click(function(e) {
             e.preventDefault();
-            if ($(this).next('.submenu').length) {
-                $(this).next('.submenu').toggle();
+
+            // Use EasyZoom's `swap` method
+            api1.swap($this.data('standard'), $this.attr('href'));
+        });
+
+        // Setup toggles example
+        var api2 = $easyzoom.filter('.easyzoom--with-toggle').data('easyZoom');
+
+        $('.toggle').on('click', function() {
+            var $this = $(this);
+
+            if ($this.data("active") === true) {
+                $this.text("Switch on").data("active", false);
+                api2.teardown();
+            } else {
+                $this.text("Switch off").data("active", true);
+                api2._init();
             }
-            $('.dropdown').on('hide.bs.dropdown', function() {
-                $(this).find('.submenu').hide();
-            })
         });
-    }
     </script>
     <script>
-    $('#UploadModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        document.getElementById("form_id").action = 'orders' + '/' + recipient;
-        modal.find('.modal-title').text('Notification : Slip payment file Order number : ' + recipient);
-       
-    })
-    $('#returnModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        let recipient = button.data('whatever') // Extract info from data-* attributes
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        document.getElementById("form_return").action = '/order_return' + '/' + recipient;
-        modal.find('.modal-title').text('Notification : Slip Shipping file Order number : ' + recipient);
-       
-    })
-    $('#ShowModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-        var img = button.data('img')
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text('Notification : Slip payment file Order number : ' + recipient)
-        modal.find('.modal-body img').attr('src', '{{url('')}}/slip/' + img)
-    })
+        $(document).hover('click', '.dropdown-menu', function(e) {
+            e.stopPropagation();
+        });
+        // make it as accordion for smaller screens
+        if ($(window).width() < 992) {
+            $('.dropdown-menu a').click(function(e) {
+                e.preventDefault();
+                if ($(this).next('.submenu').length) {
+                    $(this).next('.submenu').toggle();
+                }
+                $('.dropdown').on('hide.bs.dropdown', function() {
+                    $(this).find('.submenu').hide();
+                })
+            });
+        }
+    </script>
+    <script>
+        $('#UploadModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            document.getElementById("form_id").action = 'orders' + '/' + recipient;
+            modal.find('.modal-title').text('Notification : Slip payment file Order number : ' + recipient);
 
-    $('#ShowReturnModal').on('show.bs.modal', function(event) {
-        var button = $(event.relatedTarget) // Button that triggered the modal
-        var recipient = button.data('whatever') // Extract info from data-* attributes
-        var img_r = button.data('img_r')
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        var modal = $(this)
-        modal.find('.modal-title').text('Notification : Slip Shipping file Order number : ' + recipient)
-        modal.find('.modal-body img').attr('src', '{{url('')}}/slipShipping/' + img_r)
-    })
-    </script>
-    <script>
-    $(function() { //<-- wrapped here
-        $('#name').on('input', function() {
-            this.value = this.value.replace(/[^a-zA-Zก-๙]/g,
-                ''); //<-- replace all other than given set of values
-        });
-        $('#surname').on('input', function() {
-            this.value = this.value.replace(/[^a-zA-Zก-๙]/g,
-                ''); //<-- replace all other than given set of values
-        });
-        $('#account_name').on('input', function() {
-            this.value = this.value.replace(/[^a-zA-Zก-๙]/g,
-                ''); //<-- replace all other than given set of values
-        });
-        $('#account_no').on('input', function() {
-            this.value = this.value.replace(/[^0-9]/g,
-                ''); //<-- replace all other than given set of values
-        });
-        $('#mobile').on('input', function() {
-            this.value = this.value.replace(/[^0-9]/g,
-                ''); //<-- replace all other than given set of values
-        });
+        })
+        $('#returnModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            let recipient = button.data('whatever') // Extract info from data-* attributes
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            document.getElementById("form_return").action = '/order_return' + '/' + recipient;
+            modal.find('.modal-title').text('Notification : Slip Shipping file Order number : ' + recipient);
 
-    });
-    </script>
-    <script>
-    var msg = '{{Session::get('message ')}}';
-    var exist = '{{Session::has('message ')}}';
-    if (exist) {
-        alert(msg);
-    }
-    </script>
-    <script>
-    if (window.location.pathname == '/orders') {
-        // $('.sub-menu-item.profile').addClass('active');
-        $('.menu-account-item.orderlist-menu').addClass('active');
-    } else if (window.location.pathname == '/myaccount') {
-        $('.sub-menu-item.profile').addClass('active');
+        })
+        $('#ShowModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            var img = button.data('img')
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('Notification : Slip payment file Order number : ' + recipient)
+            modal.find('.modal-body img').attr('src', '{{ url('') }}/slip/' + img)
+        })
 
-    }
+        $('#ShowReturnModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var recipient = button.data('whatever') // Extract info from data-* attributes
+            var img_r = button.data('img_r')
+            // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+            // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+            var modal = $(this)
+            modal.find('.modal-title').text('Notification : Slip Shipping file Order number : ' + recipient)
+            modal.find('.modal-body img').attr('src', '{{ url('') }}/slipShipping/' + img_r)
+        })
+    </script>
+    <script>
+        $(function() { //<-- wrapped here
+            $('#name').on('input', function() {
+                this.value = this.value.replace(/[^a-zA-Zก-๙]/g,
+                    ''); //<-- replace all other than given set of values
+            });
+            $('#surname').on('input', function() {
+                this.value = this.value.replace(/[^a-zA-Zก-๙]/g,
+                    ''); //<-- replace all other than given set of values
+            });
+            $('#account_name').on('input', function() {
+                this.value = this.value.replace(/[^a-zA-Zก-๙]/g,
+                    ''); //<-- replace all other than given set of values
+            });
+            $('#account_no').on('input', function() {
+                this.value = this.value.replace(/[^0-9]/g,
+                    ''); //<-- replace all other than given set of values
+            });
+            $('#mobile').on('input', function() {
+                this.value = this.value.replace(/[^0-9]/g,
+                    ''); //<-- replace all other than given set of values
+            });
+
+        });
+    </script>
+    <script>
+        var msg = '{{ Session::get('message ') }}';
+        var exist = '{{ Session::has('message ') }}';
+        if (exist) {
+            alert(msg);
+        }
+    </script>
+    <script>
+        if (window.location.pathname == '/orders') {
+            // $('.sub-menu-item.profile').addClass('active');
+            $('.menu-account-item.orderlist-menu').addClass('active');
+        } else if (window.location.pathname == '/myaccount') {
+            $('.sub-menu-item.profile').addClass('active');
+
+        }
+    </script>
+    <script>
+        // Get a reference to the file input element
+        const inputElement = document.querySelector('input[id="upload"]');
+        FilePond.registerPlugin(FilePondPluginImagePreview);
+        // Create a FilePond instance
+        const pond = FilePond.create(inputElement);
+        FilePond.setOptions({
+            server: {
+
+                process: {
+                    url: './upload',
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                }
+            }
+
+
+        });
     </script>
 </body>
 
