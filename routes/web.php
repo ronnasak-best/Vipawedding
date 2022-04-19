@@ -60,7 +60,8 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::resource('/check-out',CheckoutController::class);
     //Route::post('/payment','CheckoutController@payment');
     Route::resource('/orders', OrderController::class);
-    Route::post('/upload', [OrderController::class,'upload'])->name('upload');
+    Route::post('/upload', [OrderController::class,'upload_image'])->name('upload');
+    Route::post('/revert', [OrderController::class,'delete_image'])->name('revert');
     Route::post('/order_return/{id}',[OrderController::class,'upload_return']);
     //Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
 });

@@ -190,8 +190,8 @@
                             </div>
                             <div class="col-sm-12 px-4 ">
                                 <label style="margin-bottom: 0.5px;">Add file:</label>
-                                <input type="file" name="image" class="form-control">
-                                <input type="file" name="image_test" id="upload" required>
+                                
+                                <input type="file" name="image" id="upload" required>
                             </div>
                         </div>
                     </div>
@@ -220,5 +220,5 @@
             </div>
         </div>
     </div>
-    
+
 @endsection

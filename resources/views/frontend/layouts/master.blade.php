@@ -50,7 +50,7 @@
     <script src="{{ asset('easyzoom/js/easyzoom.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
-<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
 
 
     <script>
@@ -193,17 +193,21 @@
         const pond = FilePond.create(inputElement);
         FilePond.setOptions({
             server: {
-
                 process: {
                     url: './upload',
                     method: 'POST',
                     headers: {
                         'X-CSRF-TOKEN': '{{ csrf_token() }}'
                     },
+                },
+                revert: {
+                    url: './revert',
+                    method: 'post',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
                 }
             }
-
-
         });
     </script>
 </body>

@@ -1,12 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use App\Models\Orders;
 use App\Models\OrdersProduct;
 use App\Models\Products;
 use App\Models\ProductAtrr;
+
 use Image;
 
 class OrderController extends Controller
@@ -155,8 +156,8 @@ class OrderController extends Controller
     {
         //
     }
-    public function upload(Request $request){
-
+    public function upload_image(Request $request){
+        //dd($request->file('image'));
         if($request->file('image')){
             $image=$request->file('image');
               if($image->isValid()){
@@ -166,5 +167,11 @@ class OrderController extends Controller
               }
         }
         return response($filename, 200);
+    }
+    public function delete_image(Request $request){
+        $filename = request()->getContent();
+        $filepath = public_path('slipShipping/'.$filename);
+        unlink($filepath);
+        return response('success', 200);
     }
 }
