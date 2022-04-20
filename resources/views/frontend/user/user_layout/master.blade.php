@@ -6,7 +6,7 @@
     <div class="col-sm-3">
         <div class="sm-up">
             <div class="menu-account-welcome text">
-                ยินดีต้อนรับ, &nbsp; <strong>ronnasak_best@hotmail.com </strong>
+                ยินดีต้อนรับ, &nbsp; <strong>{{ Auth::user()->email }}</strong>
             </div>
             <div class="menu-account-item profile">
                 <div class="menu-card">
@@ -294,8 +294,8 @@ async function renderAddressList() {
                         ${address.mobile}
                     </div>
                     <div class="address-info">
-                        ${[address.address, address.district, address.sub_district, address.province, address.pincode].join(' ')} 
-                        ${address.default_address == '1' ? '<span class="default-shipping"> [ค่าเริ่มต้น] </span>' : ''}                                          
+                        ${[address.address, address.district, address.sub_district, address.province, address.pincode].join(' ')}
+                        ${address.default_address == '1' ? '<span class="default-shipping"> [ค่าเริ่มต้น] </span>' : ''}
                     </div>
                     <div class="edit">
                         <button onclick="setFormValueForEdit(${address.id})" class="button">
@@ -360,7 +360,7 @@ function DeleteAddress(id) {
                     console.log(err)
                 }
             })
-           
+
         }
     })
 }
