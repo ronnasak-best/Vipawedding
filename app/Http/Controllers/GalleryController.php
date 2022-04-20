@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Gallery;
+use Image;
 
 class GalleryController extends Controller
 {
@@ -46,7 +47,7 @@ class GalleryController extends Controller
                   $filename  = time() . '.' . $image->getClientOriginalExtension();
                   $path = public_path('products/' . $filename);
                   Image::make($image->getRealPath())->save($path);
-    
+
                   //$filename = $image->getClientOriginalName();
                 //  $path=public_path('products/',$filename);
                 //  Image::make($image)->resize(300,300)->save($path);
@@ -56,7 +57,7 @@ class GalleryController extends Controller
             }
           Gallery::create($formInput);
           return back()->with('message','Add Images Successed');
-        
+
     }
 
     /**

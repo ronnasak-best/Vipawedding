@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Products;
+use Image;
 
 class ProductsController extends Controller
 {
@@ -42,7 +43,7 @@ class ProductsController extends Controller
             //'p_name'=>'required|max:255|unique:products,p_name',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
           ]);
-    
+
           $formInput=$request->all();
             if($request->file('image')){
               $image=$request->file('image');
@@ -50,7 +51,7 @@ class ProductsController extends Controller
                   $filename  = time() . '.' . $image->getClientOriginalExtension();
                         $path = public_path('products/' . $filename);
                         Image::make($image->getRealPath())->save($path);
-    
+
                   //$filename = $image->getClientOriginalName();
                 //  $path=public_path('products/',$filename);
                 //  Image::make($image)->resize(300,300)->save($path);
@@ -66,7 +67,7 @@ class ProductsController extends Controller
             }
             Products::create($formInput);
           return redirect()->route('products.index')->with('message','Added Success!');
-        
+
     }
 
     /**

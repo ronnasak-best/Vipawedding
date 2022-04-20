@@ -110,6 +110,29 @@
             var modal = $(this)
             document.getElementById("form_id").action = 'orders' + '/' + recipient;
             modal.find('.modal-title').text('Notification : Slip payment file Order number : ' + recipient);
+            const upload_slip = document.querySelector('input[id="upload_slip"]');
+            const pond2 = FilePond.create(upload_slip);
+            // Get a reference to the file input element
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+            FilePond.setOptions({
+                server: {
+                    process: {
+                        url: './upload',
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    },
+                    revert: {
+                        url: './revert_slip',
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+
+                    }
+                }
+            });
 
         })
         $('#returnModal').on('show.bs.modal', function(event) {
@@ -120,7 +143,29 @@
             var modal = $(this)
             document.getElementById("form_return").action = '/order_return' + '/' + recipient;
             modal.find('.modal-title').text('Notification : Slip Shipping file Order number : ' + recipient);
+            // Get a reference to the file input element
+            const upload = document.querySelector('input[id="upload"]');
+            const pond_1 = FilePond.create(upload);
+            FilePond.registerPlugin(FilePondPluginImagePreview);
+            FilePond.setOptions({
+                server: {
+                    process: {
+                        url: './upload',
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    },
+                    revert: {
+                        url: './revert',
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
 
+                    }
+                }
+            });
         })
         $('#ShowModal').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
@@ -185,31 +230,7 @@
 
         }
     </script>
-    <script>
-        // Get a reference to the file input element
-        const inputElement = document.querySelector('input[id="upload"]');
-        FilePond.registerPlugin(FilePondPluginImagePreview);
-        // Create a FilePond instance
-        const pond = FilePond.create(inputElement);
-        FilePond.setOptions({
-            server: {
-                process: {
-                    url: './upload',
-                    method: 'POST',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                },
-                revert: {
-                    url: './revert',
-                    method: 'post',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                }
-            }
-        });
-    </script>
+
 </body>
 
 </html>

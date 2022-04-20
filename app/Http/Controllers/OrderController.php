@@ -7,6 +7,7 @@ use App\Models\Orders;
 use App\Models\OrdersProduct;
 use App\Models\Products;
 use App\Models\ProductAtrr;
+use App\Models\Bank;
 
 use Image;
 
@@ -25,7 +26,8 @@ class OrderController extends Controller
       $orders_product=OrdersProduct::all();
       //dd(json_decode($orders_product));
       //dd(json_decode($orders));
-      return view('frontend.user.myorders',compact('orders'));
+      $banks = Bank::all();
+      return view('frontend.user.myorders',compact('orders','banks'));
     }
 
     /**
@@ -84,65 +86,23 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-        //$order_update = Orders::where('id_or',$id)->first();
-        $this->validate($request,[
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-          ]);
-          //$formInput=$request->all();
-            if($request->file('image')){
-              $image=$request->file('image');
-                if($image->isValid()){
-                  $filename  = time() . '.' . $image->getClientOriginalExtension();
-                  $path = public_path('slip/' . $filename);
-                  Image::make($image->getRealPath())->save($path);
-
-                  //$filename = $image->getClientOriginalName();
-                //  $path=public_path('products/',$filename);
-                //  Image::make($image)->resize(300,300)->save($path);
-                //  $image->resize(300,300)->save($path,$filename);
-
-                //  $image->save();
-                }
-
-            }
-
-            Orders::where('id',$id)->update(['payment_slip'=>$filename,'status'=>2]);
-
-
-          return redirect()->route('orders.index')->with('Thank you! Your payment has been successfully accepted!');
+        $order = Orders::where('id',$id)->first();
+        $order->status = 2;
+        $order->payment_slip = $request->image_slip;
+        $order->bank_id = $request->bank_id;
+        $order->save();
+        return back();
     }
 
     public function upload_return(Request $request, $id)
     {
-      dd($request->all());
-
-      $id = $request->id;
-        //$order_update = Orders::where('id_or',$id)->first();
-        $this->validate($request,[
-          'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-        //$formInput=$request->all();
-          if($request->file('image')){
-            $image=$request->file('image');
-              if($image->isValid()){
-                $filename  = time() . '.' . $image->getClientOriginalExtension();
-                $path = public_path('slipShipping/' . $filename);
-                Image::make($image->getRealPath())->save($path);
-
-                //$filename = $image->getClientOriginalName();
-              //  $path=public_path('products/',$filename);
-              //  Image::make($image)->resize(300,300)->save($path);
-              //  $image->resize(300,300)->save($path,$filename);
-
-              //  $image->save();
-              }
-
-          }
-          $status = 6;
-          Orders::where('id',$id)->update(['image_return_slip'=>$filename,'status'=>$status]);
-
-
+        $order = Orders::where('id',$id)->first();
+        $order->status = 6;
+        $order->image_return_slip = $request->image;
+        $order->bank_name = $request->bank_name;
+        $order->account_name = $request->account_name;
+        $order->account_no = $request->account_no;
+        $order->save();
         return back();
     }
 
@@ -157,20 +117,29 @@ class OrderController extends Controller
         //
     }
     public function upload_image(Request $request){
-        //dd($request->file('image'));
         if($request->file('image')){
             $image=$request->file('image');
-              if($image->isValid()){
-                $filename  = time() . '.' . $image->getClientOriginalExtension();
-                $path = public_path('slipShipping/' . $filename);
-                Image::make($image->getRealPath())->save($path);
-              }
+            $filename  = time() . '.' . $image->getClientOriginalExtension();
+            $path = public_path('slipShipping/' . $filename);
+        }elseif($request->file('image_slip')){
+            $image=$request->file('image_slip');
+            $filename  = time() . '.' . $image->getClientOriginalExtension();
+            $path = public_path('slip/' . $filename);
         }
+        if($image->isValid()){
+            Image::make($image->getRealPath())->save($path);
+          }
         return response($filename, 200);
     }
     public function delete_image(Request $request){
         $filename = request()->getContent();
         $filepath = public_path('slipShipping/'.$filename);
+        unlink($filepath);
+        return response('success', 200);
+    }
+    public function delete_image_slip(Request $request){
+        $filename = request()->getContent();
+        $filepath = public_path('slip/'.$filename);
         unlink($filepath);
         return response('success', 200);
     }

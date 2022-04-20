@@ -43,7 +43,7 @@ class ProductAtrrController extends Controller
         ]);
          ProductAtrr::create($request->all());
          return back()->with('message','Add Attribute Successed');
-       
+
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductAtrrController extends Controller
         $attributes=ProductAtrr::where('products_id',$id)->get();
         $product=Products::findOrFail($id);
         return view('backend.products.product_atrr',compact('product','attributes'));
-    
+
     }
 
     /**
@@ -88,7 +88,7 @@ class ProductAtrrController extends Controller
                           'stock'=>$request_data['stock'][$key]]);
         }
         return back()->with('message','Update Attribute Successed');
-    
+
     }
 
     /**

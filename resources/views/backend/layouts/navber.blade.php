@@ -5,7 +5,12 @@
                 <img src="{{asset('/images/4132.jpg')}}" style="width: 100%; height:60px" alt="profile">
               </a>
             </li>
-
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('bank.index')}}">
+                  <span class="menu-title">บัญชี</span>
+                  <i class="mdi mdi-backup-restore menu-icon"></i>
+                </a>
+              </li>
             <li class="nav-item">
               <a class="nav-link" href="{{route('category.index')}}">
                 <span class="menu-title">Category</span>
@@ -30,7 +35,7 @@
                 <i class="mdi mdi-backup-restore menu-icon"></i>
               </a>
             </li>
-            
+
 
           </ul>
 </nav>

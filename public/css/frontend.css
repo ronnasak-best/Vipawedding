@@ -781,3 +781,46 @@ button:disabled {
 .input-item .error {
     border-color: #E31F26;
 }
+.modal-body .bank-list {
+    justify-content: center;
+}
+.bank-list .bank {
+    padding: 14px;
+    display: flex;
+    border-radius: 8px;
+    position: relative;
+    width: 100%;
+    border: solid 1px;
+    border-color: #ddd;
+}
+
+.bank-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+}
+.bank-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 0;
+}
+.bank-infor {
+    margin-left: 16px;
+    text-align: left;
+}
+.bank-account-infor {
+    display: flex;
+}
+.infor {
+    display: flex;
+    flex-direction: column;
+    font-size: 12px;
+}
+.modal-body .bank-list .scb-bank .radio-marker {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid #777777;
+    margin: 4px;
+    text-align: center;
+}
