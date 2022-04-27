@@ -15,25 +15,24 @@
             </div>
             <form class="forms-sample" method="post" action="{{ route('check-out.store') }}">
                 {{ csrf_field() }}
-                <div class="card-body">
-                    <div id="addr_selects">                    
+                <div class="card-body ">
+                    <div id="addr_selects">
                         @foreach ($addr as $add)
                         <div class="address_box mt-4" {{ $add['default_address'] == 1 ? 'style=display:block;' :'style=display:none;'}} >
                             <div class="row">
                                 <div class=" row col-sm-5 ml-2">
-                                    <input class="address-item mr-3 mt-2" type="radio" name="address"
-                                        value="{{ $add['id'] }} ">
+                                    <input class="address-item mr-2 mt-2" type="radio" name="address"
+                                        value="{{ $add['id'] }}" {{ $add['default_address'] == 1 ? 'checked' : ''}}>
                                     <div style=" font-weight: bold;">
                                         {{ $add['name'] }}<br>
                                         {{ $add['mobile'] }}
                                     </div>
-
                                 </div>
                                 <div class="AddressText">
-                                    <p>{{ $add['address'] }} |
+                                    <p class="mb-1">{{ $add['address'] }} |
                                         {{ $add['sub_district'] }},{{ $add['district'] }},{{ $add['province'] }},{{ $add['pincode'] }}
-                                        {{ $add['default_address'] == 1 ? "[ค่าเริ่มต้น]" : ''}}
                                     </p>
+                                    {{ $add['default_address'] == 1 ? "[ค่าเริ่มต้น]" : ''}}
                                 </div>
                             </div>
                         </div>
@@ -118,7 +117,7 @@
                                         style="width: 50px; height:75px" class="rounded">
                                     <div class="product-detail">
                                         <spam>{{ $row->name }}</spam><br>
-                                        <a>SIZE : {{ $row->options->size }}</a><br>                               
+                                        <a>SIZE : {{ $row->options->size }}</a><br>
                                     </div>
                                 </td>
 
@@ -159,7 +158,7 @@
                         <tbody>
                             <tr>
                                 <td style="width:500px; padding-bottom:20px;">Total</td>
-                                <td style="text-align: center; vertical-align: middle;">                
+                                <td style="text-align: center; vertical-align: middle;">
                                     {{(float)filter_var(Cart::Subtotal(), FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION) * (float)(2.00)}}฿
                                 </td>
                             </tr>
@@ -177,18 +176,24 @@
 </div>
 <script>
 $(".day_rant").change(function() {
+    var min_date = new Date();
+    min_date.setDate(min_date.getDate() + 2);
+    var max_date = new Date();
+    max_date.setDate(max_date.getDate() + 17);
     let n_day = $(this).val();
     $('input[name="daterange"]').daterangepicker({
         locale: {
             format: "DD/MM/YYYY"
         },
         autoApply: true,
-        dateLimit: {
+        "maxSpan": {
             days: n_day
         },
         startDate: moment().startOf('day'),
         endDate: moment().startOf('day').add(n_day, 'day'),
-        minDate: new Date()
+        minDate: min_date,
+        maxDate: max_date
+
     });
     $(".startdate").val(moment().startOf('day').format("DD/MM/YYYY"));
     $(".enddate").val(moment().startOf('day').add(n_day, 'day').format("DD/MM/YYYY"));
@@ -223,7 +228,7 @@ function addr_change() {
 
         // if($(this).find('input:checked').length > 0){
         //   console.log("dsrfs");
-        //   // 
+        //   //
         // }
     })
 }

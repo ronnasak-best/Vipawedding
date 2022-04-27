@@ -35,6 +35,12 @@
                 <i class="mdi mdi-backup-restore menu-icon"></i>
               </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{route('reports.index')}}">
+                  <span class="menu-title">รายงาน</span>
+                  <i class="mdi mdi-backup-restore menu-icon"></i>
+                </a>
+              </li>
 
 
           </ul>

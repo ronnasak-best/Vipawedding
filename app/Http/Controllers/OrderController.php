@@ -26,7 +26,7 @@ class OrderController extends Controller
       $orders_product=OrdersProduct::all();
       //dd(json_decode($orders_product));
       //dd(json_decode($orders));
-      $banks = Bank::all();
+      $banks = Bank::where('status',1)->get();
       return view('frontend.user.myorders',compact('orders','banks'));
     }
 

@@ -15,6 +15,7 @@ use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\ProductAtrrController;
 use App\Http\Controllers\BackEndOrderController;
 use App\Http\Controllers\BankController;
+use App\Http\Controllers\ReportController;
 
 
 
@@ -102,7 +103,9 @@ Route::group(['prefix'=>'admin','middleware'=>['auth:sanctum',config('jetstream.
 
     //Bank
     Route::resource('/bank',BankController::class);
-
+    //report
+    Route::resource('/reports', ReportController::class);
+    Route::post('reports/report_rant', [ReportController::class,'report_rant'])->name('reports.report_rant');
 });
 
 

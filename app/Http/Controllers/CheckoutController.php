@@ -20,7 +20,7 @@ class CheckoutController extends Controller
      */
     public function index()
     {
-        $addr = Address::where('users_id',auth()->user()->id)->get();
+        $addr = Address::where('users_id',auth()->user()->id)->orderBy('default_address','desc')->get();
         return view('frontend.checkout.checkout',compact('addr'));
     }
 
@@ -42,7 +42,7 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
-     
+
         if($request->daterange=="")
         {
           return back()->with('message','Please select Size');
@@ -81,14 +81,14 @@ class CheckoutController extends Controller
                 $product_atrr->save();
                 OrdersProduct::create([
                     'order_id' => $id,
-                    'product_id' => $item->id,                   
+                    'product_id' => $item->id,
                     'size' => $item->options->size,
                     'quantity' => $item->qty,
                 ]);
             }
         Cart::destroy();
             return redirect()->route('orders.index')->with('Thank you! Your payment has been successfully accepted!');
-        
+
     }
 
     /**

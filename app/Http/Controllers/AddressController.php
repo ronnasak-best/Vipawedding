@@ -107,7 +107,7 @@ class AddressController extends Controller
               $value->save();
             }
           }
-              $address = Address::find($id);        
+              $address = Address::find($id);
               $address->name = $request->get('address_name');
               $address->surname = $request->get('address_name');
               $address->address = $request->get('address');
