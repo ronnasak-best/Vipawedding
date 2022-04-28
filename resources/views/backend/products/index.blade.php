@@ -52,8 +52,7 @@
             </td>
             <td>
               <a href="{{route('products.edit',$product['id'])}}" class="btn btn-inverse-info btn-sm">Edit</a>
-              <a href="product/delete/{{$product['id']}}" class="delete-confirm btn btn-inverse-danger btn-sm">Delete</a>
-                {{csrf_field()}}
+              
             </td>
           </tr>
 

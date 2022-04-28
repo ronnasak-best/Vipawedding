@@ -32,7 +32,10 @@
                 </div>
             </a>
 
-            <a>
+            <a href="{{ route('logout') }}"
+            onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+
                 <div class="menu-account-item last-child" onclick="leftMenuLogout()">
                     <img src="https://www.mercular.com/img/icons/logout.svg" class="menu-icon-account"> <span>
                         ออกจากระบบ</span>
@@ -42,6 +45,7 @@
     </div>
     <div class="col-sm-9">
         @yield('user-manage')
+
     </div>
 </div>
 <script>

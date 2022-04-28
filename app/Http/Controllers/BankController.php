@@ -95,19 +95,29 @@ class BankController extends Controller
             'account_name' => 'required',
             'bank_name' => 'required',
             'bank_location' => 'required',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        $formInput=$request->all();
-            if($request->file('logo')){
-              $image=$request->file('logo');
-                if($image->isValid()){
-                    $filename  = $image->getClientOriginalName();
-                    $path = public_path('banks/' . $filename);
-                    Image::make($image->getRealPath())->save($path);
-                    $formInput['logo']=$filename;
-                }
+        $bank = Bank::find($id);
+        $old_filename = Bank::whereId($id)->first()->logo;
+        if($request->file('logo')){
+            $filepath = public_path('banks/'.$old_filename);
+            unlink($filepath);
+            $image=$request->file('logo');
+              if($image->isValid()){
+                  $filename  = $image->getClientOriginalName();
+                  $path = public_path('banks/' . $filename);
+                  Image::make($image->getRealPath())->save($path);
+                  $bank['logo']=$filename;
+              }
             }
-        Bank::whereId($id)->update($formInput);
+        else{
+            $bank['logo']=$old_filename;
+        }
+        $bank['account_no']=$request->account_no;
+        $bank['account_name']=$request->account_name;
+        $bank['bank_name']=$request->bank_name;
+        $bank['bank_location']=$request->bank_location;
+        $bank['status']=$request->status;
+        $bank->save();
         return redirect()->route('bank.index')->with('success','Bank updated successfully');
     }
 

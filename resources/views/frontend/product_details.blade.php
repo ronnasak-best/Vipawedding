@@ -79,25 +79,11 @@
                     <!-- END Modal -->
                     <br>
                     <br>
-                    <div class="form-group labels row ">
-                        <label class="col-sm-3 col-form-label">Quantity:</label>
-                        <div class="col-sm-6 pl-0">
-                            <input class="form-control" type="text" name="quantity" value="{{$totalStock}}"
-                                id="inputStock" />
-                        </div>
-                    </div>
-                    <p><b>Availability:</b>
-                        @if($totalStock>0)
-                        <span id="availableStock">In Stock</span>
-                        @else
-                        <span id="availableStock">Out of Stock</span>
-                        @endif
-                    </p>
 
-                    <br>
+
                     <input class="btn" type="submit" name="" value="Add to cart">
                     <br>
-                    <div class="">
+                    <div class="mt-4">
                         <p>ABOUT: </p>
                         {!!$detail_product['description']!!}
                     </div>

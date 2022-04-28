@@ -62,8 +62,8 @@ class OrderController extends Controller
         $orderproduct = $order->ordersproduct ;
      // dd($orderproduct[0]->product);
      // $ordersproduct = OrdersProduct::where('order_id',$id)->first();
-
-        return view('frontend.user.myorder',compact('orderproduct','order'));
+        $banks = Bank::where('status',1)->get();
+        return view('frontend.user.myorder',compact('orderproduct','order','banks'));
     }
 
     /**
@@ -114,7 +114,18 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $orders_product = OrdersProduct::where('order_id',$id)->get();
+        foreach ($orders_product as $key => $value) {
+            $product_atrr= ProductAtrr::where('products_id',$value->product_id)
+                                              ->where('size',$value->size)
+                                              ->first();
+            $product_atrr->stock = $product_atrr->stock + 1;
+            $product_atrr->save();
+        }
+        $order = Orders::find($id);
+        $order->status = 0;
+        $order->save();
+        return back();
     }
     public function upload_image(Request $request){
         if($request->file('image')){

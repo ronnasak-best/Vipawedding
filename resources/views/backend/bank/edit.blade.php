@@ -18,7 +18,8 @@
   <div class="card">
     <div class="card-body">
       <form class="forms-sample" method="post" action="{{route('bank.update',$bank->id)}}" enctype="multipart/form-data">
-        {{csrf_field()}}
+       @csrf
+       @method('PATCH')
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">ธนาคาร</label>
             <div class="col-sm-12">

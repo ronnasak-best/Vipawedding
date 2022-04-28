@@ -48,7 +48,7 @@ Route::get('/cat/{id?}/{ss?}',[IndexController::class ,'listByCat'])->name('cats
 //cart
 Route::resource('/cart',CartController::class);
 //Route::resource('/category', CategoryController::class);
-//Route::get('/cart/delete/{id}', 'CartController@destroy')->name('cart.destroy');
+Route::get('/cart/delete/{id}', [CartController::class,'destroy'])->name('cart.destroy');
 
 //address
 Route::get('/province',[DistrictController::class ,'provinces']);
@@ -62,6 +62,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::resource('/check-out',CheckoutController::class);
     //Route::post('/payment','CheckoutController@payment');
     Route::resource('/orders', OrderController::class);
+    Route::get('orders/cancel/{id}', [OrderController::class,'destroy'])->name('orders.destroy');
     Route::post('/upload', [OrderController::class,'upload_image'])->name('upload');
     Route::post('/revert', [OrderController::class,'delete_image'])->name('revert');
     Route::post('/revert_slip', [OrderController::class,'delete_image_slip'])->name('revert_slip');
@@ -85,7 +86,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth:sanctum',config('jetstream.
     // Route::get('product/delete/{id}', 'ProductsController@destroy');
     // /// Product Images
     Route::resource('/Image-gallery', GalleryController::class);
-    // Route::get('Image-gallery/delete-Imagegallery/{id}', 'GalleryController@destroy');
+    Route::get('Image-gallery/delete-Imagegallery/{id}',[GalleryController::class,'destroy']);
     // /// product_atrr
     Route::resource('/product_atrr', ProductAtrrController::class);
     //Route::get('product_atrr/delete/{id}', 'ProductAtrrController@destroy');

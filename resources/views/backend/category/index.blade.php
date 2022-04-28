@@ -42,8 +42,7 @@
             </td>
             <td>
               <a href="{{route('category.edit',$cat['id'])}}" class="btn btn-inverse-info btn-sm">Edit</a>
-              <a href="category/delete/{{$cat['id']}}" class="delete-confirm btn btn-inverse-danger btn-sm">Delete</a>
-                {{csrf_field()}}
+              
             </td>
           </tr>
           @endforeach

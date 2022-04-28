@@ -1,161 +1,95 @@
-@extends('frontend.layouts.master')
-@section('title','List Categories')
-@section('content')
-<div class="container">
-<div class="ordertitle">
-    ORDER NUMBER : {{$order->id}}
-</div>
-<hr style="border-top: 2px solid #eee;">
-<div class=" row">
-  <div class=" orderhead col-sm-7">
-    <h5> Shipping address :: {{$order->delivery_op}}</h5> <br>
-    <table>
-      <tbody>
-        <tr>
-          <td>Name : </td>
-          <td>&nbsp;&nbsp;{{$order->billing_name}} {{$order->billing_surname}}</td>
-        </tr>
-        <tr>
-          <td>Address : </td>
-          <td>&nbsp;&nbsp;{{$order->billing_address}} ต.{{$order->billing_sub_district}}	อ.{{$order->billing_district}}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>&nbsp;&nbsp;จ.{{$order->billing_province}} {{$order->billing_pincode}}</td>
-        </tr>
-        <tr>
-          <td>Phone : </td>
-          <td>&nbsp;&nbsp;{{$order->billing_phone}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class=" orderhead col-sm-5">
-    <h5> Account</h5> <br>
-    <table>
-      <tbody>
-        <tr>
-          <td>Bank Name : </td>
-          <td>&nbsp;&nbsp;{{$order->bank_name}}</td>
-        </tr>
-        <tr>
-          <td>Account Name : </td>
-          <td>&nbsp;&nbsp;{{$order->account_name}}</td>
-        </tr>
-        <tr>
-          <td>Account No.</td>
-          <td>&nbsp;&nbsp;{{$order->account_no}} </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-<br><hr style="border-top: 2px solid #eee;">
-        <table class="table table-bordered tablecart" >
-         	<thead class="thead-primary">
-             	<tr>
-                  <th>&nbsp;</th>
-                  <th style="text-align: center; vertical-align: middle;">Product</th>
-                 	<th style="text-align: center; vertical-align: middle; ">start date</th>
-                 	<th style="text-align: center; vertical-align: middle;">return date</th>
-                  <th style="text-align: center; vertical-align: middle;">status</th>
-                  <th style="text-align: center; vertical-align: middle;">แจ้งคืนสินค้า</th>
-             	</tr>
-         	</thead>
+@extends('frontend.user.user_layout.order_layout')
+@section('title', 'List Categories')
+@section('order-manage')
+    <div class="card">
+        <div class="card-order-header" style="background: #FAFAFA">
+            <div class="order-header">
+                <spam class="title-text">รายการเช่า <a href="">#{{ $order['id'] }}</a>
+                </spam>
+            </div>
+            <div style="width: 300px;">
+                @if ($order['payment_slip'] == false && $order['status'] == 1)
+                    <div class="button-attached">
+                        <button type="button" class="btn btn-primary button primary btn-block " data-toggle="modal"
+                            data-target="#UploadModal" data-whatever="{{ $order['id'] }}">แนบหลักฐานการโอนเงิน</button>
+                        <a class="btn btn-danger order-cancel" href="{{route('orders.destroy',$order['id'])}}" class="btn btn-danger">ยกเลิก</a>
+                    </div>
+                @elseif($order['status'] == 2)
+                    <div class="button-attached">
+                        <button type="button" class="btn btn-outline-secondary button primary btn-block " data-toggle="modal"
+                            data-target="#ShowModal" data-whatever="{{ $order['id'] }}"
+                            data-img="{{ $order->payment_slip }}">หลักฐานการโอนเงิน</button>
+                    </div>
+                @elseif($order['status'] == 5)
+                    <div class="button-attached">
+                        <button type="button" class="btn btn-danger button danger btn-block" data-toggle="modal"
+                            data-target="#returnModal" data-whatever="{{ $order['id'] }}">แนบหลักฐานการจัดส่ง</button>
+                    </div>
+                @elseif($order['status'] == 6)
+                    <div class="button-attached">
+                        <button type="button" class="btn btn-outline-secondary button primary btn-block "
+                            data-toggle="modal" data-target="#ShowReturnModal" data-whatever="{{ $order['id'] }}"
+                            data-img_r="{{ $order->image_return_slip }}">หลักฐานการจัดส่ง</button>
+                    </div>
+                @endif
+            </div>
+        </div>
+        <div class="card-order-header" style="background: #f3f3f3">
+            <div class="order-header">
+                <spam class="title-text_detail">สถานะ weqwewqeqwe
+                </spam>
+            </div>
+            <div class="order-header">
+                <spam class="title-text_detail">การจัดส่ง {{ $order['tracking_no_send'] }}</spam>
+            </div>
+        </div>
+        <div class="card-order-header">
+            <div>
+                <div class="text-858585">วันที่เช่า</div>
+                <did class="text-black font-weight-bold">{{ $order['startDate'] }}</did>
+                <div class="text-858585 mt-2">วันที่คืนชุด</div>
+                <div class="text-black font-weight-bold">{{ $order['endDate'] }}</div>
+            </div>
+            <div class="mr-4 adadress_order_detail">
+                <div class="adadress"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24"
+                        height="24">
+                        <path d="M12 13.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path>
+                        <path fill-rule="evenodd"
+                            d="M19.071 3.429C15.166-.476 8.834-.476 4.93 3.429c-3.905 3.905-3.905 10.237 0 14.142l.028.028 5.375 5.375a2.359 2.359 0 003.336 0l5.403-5.403c3.905-3.905 3.905-10.237 0-14.142zM5.99 4.489A8.5 8.5 0 0118.01 16.51l-5.403 5.404a.859.859 0 01-1.214 0l-5.378-5.378-.002-.002-.023-.024a8.5 8.5 0 010-12.02z">
+                        </path>
+                    </svg> ที่อยู่จัดส่งสินค้า</div>
+                <div class="ml-4 mt-2 ">
+                    <div class="address_head">{{ $order['billing_name'] }}</div>
+                    <div class="address_head">{{ $order['billing_phone'] }}</div>
+                    <div class="address-text">{{ $order['billing_address'] }}</div>
 
-         	<tbody >
-         		@foreach($orderproduct as $key => $value)
-             		<tr>
-                 		<td style="width:100px;">
-                        <img src="{{url('/')}}/products/{{$value->product['image']}}" style="width: 100px; height:110px" class="rounded">
-                    </td>
-                    <td>
-                      <div class="product-detail" style="text-align: left;">
-                        <h5>{{$value->product['p_name']}}</h5>
-                        <a>SIZE : {{$value->size}}</a><br>
-                      </div>
-                    </td>
-                 		<td style="text-align: center; vertical-align: middle; ">{{$value->startDate}}</td>
-                 		<td style="text-align: center; vertical-align: middle;">{{$value->endDate}}</td>
-                    <td style="text-align: center; vertical-align: middle;">
-                      @if($value->tracking_no == false)
-                          @if($value->status == 1)
-                            Waiting payment
-                          @elseif($value->status == 2)
-                            Confirm Order
-                          @elseif($value->status == 3)
-                            Shipping
-                          @elseif($value->status == 4)
-                            Waiting Return
-                          @else
-                            Cancel
-                          @endif
-                      @else
-                          {{$value->tracking_no}}
-                      @endif
-                  </td>
-                  <td style="text-align: center; vertical-align: middle;">
-                    @if($value->status==0)
-                      Cancel
-                    @elseif($value->tracking_no == true)
-                        @if($value->image == false)
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UploadModal" data-whatever="">
-                            Upload
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade bd-example-modal-lg" id="UploadModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h6 class="modal-title" id="UploadModalLabel"></h6>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                <form  method="post" action="{{ url('/order_return')}}" enctype="multipart/form-data">
-                                  {{csrf_field()}}
+                </div>
+            </div>
 
-                                  <input type="hidden" name="id" value="{{$value->id}}">
-                                  <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Add file:</label>
-                                    <div class="">
-                                      <input type="file" name="image" class="form-control">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary sm-8">upload</button>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
+
+        </div>
+    </div>
+    <div class="card mt-3">
+        <div class="card-body" id="card_order_detail">
+            @foreach ($order->ordersproduct as $ordersproduct)
+                <div class="d-flex-between" style=" padding: 15px;">
+                    <div class="d-flex-between">
+                        <img src="{{ url('/') }}/products/{{ $ordersproduct->product['image'] }}"
+                            style="width: 100px; height:110px" class="rounded">
+                        <div class="p-3  item-detail" style="width: 400px;">
+                            <div class="font-weight-bold">{{ $ordersproduct->product['p_name'] }}</div>
+                            <div style="font-size: 14px;" class="order-item-sub text-858585">
+                                {{ $ordersproduct->product['p_code']}}</div>
+                            <div style="font-size: 14px;" class="order-item-sub text-858585">SIZE :
+                                {{ $ordersproduct->size }}</div>
                         </div>
-                        @else
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#returnModal" data-whatever="" data-img_r="{{$value->image}}">
-                            View file
-                        </button>
-                        <!-- Modal -->
-                        <div class="modal fade bd-example-modal-lg" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h6 class="modal-title" id="returnModalLabel"></h6>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body img">
-                                <img src="" style="width: 80%; height:80%"  alt="" >
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        @endif
-                      @endif
-                </td>
-             		</tr>
-      	   	@endforeach
+                    </div>
+                    <div>
+                        <div class="font-weight-bold">฿{{ $ordersproduct->product->price }}</div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
 
-         	</tbody>
-        </table>
-</dive>
 @endsection

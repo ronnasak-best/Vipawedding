@@ -58,13 +58,13 @@
     <script src="{{ asset('backend/vendors/chart.js/Chart.min.js') }}"></script>
     <!-- End plugin js for this page -->
     <!-- inject:js -->
-    <script src="assets/js/off-canvas.js"></script>
-    <script src="assets/js/hoverable-collapse.js"></script>
-    <script src="assets/js/misc.js"></script>
+    <script src="{{ asset('backend/js/off-canvas.js') }}"></script>
+    <script src="{{ asset('backend/js/hoverable-collapse.js') }}"></script>
+    <script src="{{ asset('backend/js/misc.js') }}"></script>
     <!-- endinject -->
     <!-- Custom js for this page -->
-    <script src="assets/js/dashboard.js"></script>
-    <script src="assets/js/todolist.js"></script>
+    <script src="{{ asset('backend/js/dashboard.js') }}"></script>
+    <script src="{{ asset('backend/js/todolist.js') }}"></script>
     <!-- End custom js for this page -->
     <script src="{{ asset('backend/js/file-upload.js') }}"></script>
 
@@ -82,20 +82,21 @@
         $('.delete-confirm').on('click', function(event) {
             event.preventDefault();
             const url = $(this).attr('href');
-            swal({
+            Swal.fire({
                 title: "Are you sure?",
                 text: "Once deleted, you will not be able to recover this imaginary file!",
                 icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then(function(value) {
-                if (value) {
-                    swal("Poof! Your imaginary file has been deleted!", {
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    Swal.fire("Poof! Your imaginary file has been deleted!", {
                         icon: "success",
                     });
                     window.location.href = url;
                 } else {
-                    swal("Your imaginary file is safe!");
+                    Swal.fire("Your imaginary file is safe!");
                 }
             });
         });
@@ -135,9 +136,6 @@
         $(document).on('click', '#search', function() {
             var start = $('#start').val();
             var end = $('#end').val();
-            // const element = document.getElementById('report-list');
-            // console.log(element);
-            // element.parentNode.removeChild(element);
             $('#reports').empty();
             $('#reports').append(`
                     <thead>
@@ -151,7 +149,6 @@
                         </tr>
                     </thead>
                     <tbody id="report-tr">
-
                     </tbody>
                     <tfoot class="table-dark">
                         <tr>
@@ -235,6 +232,42 @@
                             }
                         }
                     });
+                },
+
+            });
+
+        });
+    </script>
+    <script type="text/javascript">
+        $(document).on('click', '#search2', function() {
+            var start = $('#start').val();
+            var end = $('#end').val();
+            $('#report-list').empty();
+
+            $.ajax({
+                url: "{{ route('reports.store') }}",
+                type: "post",
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    'start': start,
+                    'end': end
+                },
+                success: function(data) {
+                    $('#report2').removeClass('d-none');
+                    var html = '';
+                    $.each(data, function(key, v) {
+                        html +=
+                            '<tr id="report-list">' +
+                            '<td>' + v.id + '</td>' +
+                            '<td>' + v.status + '</td>' +
+                            '<td>' + v.startDate + '</td>' +
+                            '<td>' + v.endDate + '</td>' +
+                            '<td>' + v.billing_name + '</td>' +
+                            '<td>' + v.other_fine + '</td>' +
+                            '<td>' + v.billing_total + '</td>' +
+                            '</tr>';
+                    });
+                    html = $('#report-tr').html(html);
                 },
 
             });

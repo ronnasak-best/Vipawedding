@@ -45,7 +45,7 @@ class CheckoutController extends Controller
 
         if($request->daterange=="")
         {
-          return back()->with('message','Please select Size');
+          return back()->with('message','Please select date');
         }
         $address = Address::find($request->address);
         //$total = Cart::Subtotal() *2;

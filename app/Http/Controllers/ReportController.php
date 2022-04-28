@@ -24,7 +24,7 @@ class ReportController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.reports.report2');
     }
 
     /**
@@ -88,10 +88,11 @@ class ReportController extends Controller
     public function report_rant(Request $request)
     {
 
-
         $startDate = $request->start;
         $endDate = $request->end;
-        $data = Orders::whereBetween('created_at', [$startDate, $endDate])->get();
+        $data = Orders::whereDate('created_at','>=', $startDate)->whereDate('created_at','<=', $endDate)->get();
+        // $data = Orders::where([['created_at','>=',$startDate],['created_at','<=',$endDate]])->get();
+        // $data = Orders::whereBetween('created_at', [$startDate, $endDate])->get();
         return response()->json($data, 200);
 
     }
