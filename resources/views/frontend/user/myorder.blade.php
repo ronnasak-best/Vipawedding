@@ -23,13 +23,13 @@
                 @elseif($order['status'] == 5)
                     <div class="button-attached">
                         <button type="button" class="btn btn-danger button danger btn-block" data-toggle="modal"
-                            data-target="#returnModal" data-whatever="{{ $order['id'] }}">แนบหลักฐานการจัดส่ง</button>
+                            data-target="#returnModal" data-whatever="{{ $order['id'] }}">แนบหลักฐานการจัดส่งคืน</button>
                     </div>
                 @elseif($order['status'] == 6)
                     <div class="button-attached">
                         <button type="button" class="btn btn-outline-secondary button primary btn-block "
                             data-toggle="modal" data-target="#ShowReturnModal" data-whatever="{{ $order['id'] }}"
-                            data-img_r="{{ $order->image_return_slip }}">หลักฐานการจัดส่ง</button>
+                            data-img_r="{{ $order->image_return_slip }}">หลักฐานการจัดส่งคืน</button>
                     </div>
                 @endif
             </div>

@@ -56,7 +56,7 @@
                     </div>
                     <div class="modal-footer">
 
-                        <button type="submit" class="btn btn-primary sm-8">upload</button>
+                        <button type="submit" class="btn btn-primary sm-8">แนบหลักฐาน</button>
                     </div>
                 </form>
             </div>
