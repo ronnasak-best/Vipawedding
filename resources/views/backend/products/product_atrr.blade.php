@@ -22,7 +22,7 @@
     <table class="table table-hover">
       <thead>
         <tr class="text-center">
-          <th>SUK</th>
+          <th>SKU</th>
           <th>Size</th>
           <th>Stock</th>
           <th>Action</th>
@@ -44,7 +44,6 @@
         </td>
         <td>
           <button type="submit" class="btn btn-inverse-info btn-sm">Edit</button>
-          <a href="delete/{{$att['id']}}" class="delete-confirm btn btn-inverse-danger btn-sm">Delete</a>
         </td>
         @endforeach
       </tbody>
@@ -62,19 +61,19 @@
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">SKU :</label>
               <div class="col-sm-12">
-                <input type="text" name="sku" class="form-control" id="coler" >
+                <input type="text" name="sku" class="form-control" id="coler" required="required">
              </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Size :</label>
               <div class="col-sm-12">
-                <input type="text" name="size" class="form-control" id="coler" >
+                <input type="text" name="size" class="form-control" id="coler" required="required">
              </div>
           </div>
           <div class="form-group row">
             <label class="col-sm-3 col-form-label">Stock :</label>
               <div class="col-sm-12">
-                <input type="number"  min="0" name="stock" class="form-control" id="coler" >
+                <input type="number"  min="0" name="stock" class="form-control" id="coler" required="required">
              </div>
           </div>
             <button type="submit" class="btn btn-gradient-primary mr-2">ADD</button>

@@ -19,6 +19,8 @@
                         <span class="btn-status status-return"> รอการส่งกลับ</span>
                     @elseif ($order['status'] == 6 || $order['status'] == 7)
                         <span class="btn-status status-waiting"> รอการตรวจสอบ</span>
+                        @elseif ($order['status'] == 8 )
+                        <span class="btn-status " style="color: #ffffff; background-color: #28a745;">เสร็จสิ้น</span>
                     @endif
                 </div>
             </div>

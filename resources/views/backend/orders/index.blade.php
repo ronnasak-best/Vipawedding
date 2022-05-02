@@ -4,7 +4,13 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <i class="mdi mdi-library-books"></i>
-            </span> Orders
+            </span> ข้อมูลการเช่า ||
+            <a href="{{route('orderss.index')}}" class="btn btn-rounded btn-sm"style="color: #ffffff; background-color: #007bff;">ทั้งหมด</a>
+            <a href="{{route('orderss.search',$status= 1)}}" class="btn btn-rounded btn-sm"style="color: #212529; background-color: #ffc107;">รอชำระเงิน</a>
+            <a href="{{route('orderss.search',$status= 2)}}" class=" btn btn-rounded btn-sm" style="color: #ffffff; background-color: #ff854a;">รอเช็คยอด</a>
+            <a href="{{route('orderss.search',$status= 3)}}" class="btn btn-rounded btn-sm" style="color: #ffffff; background-color: #17a2b8;">รอจัดส่ง</a>
+            <a href="{{route('orderss.search',$status= 4)}}" class="btn btn-rounded btn-sm"style="color: #ffffff; background-color: #28a745;">จัดส่งแล้ว</a>
+            <a href="{{route('orderss.search',$status= 0)}}" class="btn btn-rounded btn-sm" style="color: #ffffff; background-color: #6c757d;">ยกเลิก </a>
         </h3>
         <nav aria-label="breadcrumb">
         </nav>
@@ -72,7 +78,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <img class="img"
+                                                        <img class="img" style="width: 50%; height:50%"
                                                             src="{{ url('/') }}/slip/{{ $order['payment_slip'] }}"
                                                             alt="">
                                                     </div>
@@ -84,7 +90,7 @@
                                 <td style="text-align: center; vertical-align: middle;">
                                     @if ($order['payment_slip'] != true && $order['status'] == 1)
                                         <a class=" btn btn-danger btn-sm cancel-confirm"
-                                            href="{{route('orderss.destroy',$order['id'])}}">ยกเลิก</a>                                           
+                                            href="{{ route('orderss.destroy', $order['id']) }}">ยกเลิก</a>
                                     @endif
                             </tr>
                         @endforeach

@@ -32,7 +32,13 @@
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
     <link rel="stylesheet" href="{{ asset('backend/css/style.css') }}">
     <!-- End layout styles -->
-
+    <style>
+        img {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        </style>
 
 
 </head>
@@ -78,6 +84,28 @@
         $('#dynamic-row').DataTable({
             ordering: false,
             info: false,
+        });
+        $('.confirm_success').on('click', function (e) {
+            e.preventDefault();
+            const url = $(this).attr('href');
+            Swal.fire({
+                title: 'คุณต้องยืนยันการโอนเงินนี้หรือไม่?',
+
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ตกลง',
+                cancelButtonText: 'ยกเลิก'
+
+            }).then(function(result) {
+                if (result.isConfirmed) {
+                    Swal.fire("Poof! Your imaginary file has been deleted!", {
+                        icon: "success",
+                    });
+                    window.location.href = url;
+                }
+            });
         });
         $('.delete-confirm').on('click', function(event) {
             event.preventDefault();
@@ -273,6 +301,13 @@
             });
 
         });
+    </script>
+    <script>
+        var msg = '{{ Session::get('message') }}';
+        var exist = '{{ Session::has('message') }}';
+        if (exist) {
+            alert(msg);
+        }
     </script>
 </body>
 

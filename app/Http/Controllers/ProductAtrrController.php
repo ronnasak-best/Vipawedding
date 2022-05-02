@@ -36,14 +36,14 @@ class ProductAtrrController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'sku'=>'required',
-            'size'=>'required',
-            'stock'=>'required|numeric'
+        $this->validate($request, [
+            'sku' => 'required',
+            'size' => 'required',
+            'stock' => 'required|numeric'
         ]);
-         ProductAtrr::create($request->all());
-         return back()->with('message','Add Attribute Successed');
 
+        ProductAtrr::create($request->all());
+        return back()->with('message', 'บันทึกข้อมูลสำเร็จ');
     }
 
     /**
@@ -54,10 +54,9 @@ class ProductAtrrController extends Controller
      */
     public function show($id)
     {
-        $attributes=ProductAtrr::where('products_id',$id)->get();
-        $product=Products::findOrFail($id);
-        return view('backend.products.product_atrr',compact('product','attributes'));
-
+        $attributes = ProductAtrr::where('products_id', $id)->get();
+        $product = Products::findOrFail($id);
+        return view('backend.products.product_atrr', compact('product', 'attributes'));
     }
 
     /**
@@ -80,15 +79,16 @@ class ProductAtrrController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request_data=$request->all();
-        foreach ($request_data['id'] as $key=>$value){
-            $update_attr=ProductAtrr::where([['products_id',$id],['id',$request_data['id'][$key]]])
-                ->update(['sku'=>$request_data['sku'][$key],
-                          'size'=>$request_data['size'][$key],
-                          'stock'=>$request_data['stock'][$key]]);
+        $request_data = $request->all();
+        foreach ($request_data['id'] as $key => $value) {
+            $update_attr = ProductAtrr::where([['products_id', $id], ['id', $request_data['id'][$key]]])
+                ->update([
+                    'sku' => $request_data['sku'][$key],
+                    'size' => $request_data['size'][$key],
+                    'stock' => $request_data['stock'][$key]
+                ]);
         }
-        return back()->with('message','Update Attribute Successed');
-
+        return back()->with('message', 'แก้ไขข้อมูลสำเร็จ');
     }
 
     /**
@@ -99,8 +99,8 @@ class ProductAtrrController extends Controller
      */
     public function destroy($id)
     {
-        $deleteAttr=ProductAtrr::findOrFail($id);
+        $deleteAttr = ProductAtrr::findOrFail($id);
         $deleteAttr->delete();
-        return back()->with('message','Deleted Success!');
+        return back()->with('message', 'Deleted Success!');
     }
 }

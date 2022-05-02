@@ -17,7 +17,7 @@ class ReturnProductsController extends Controller
      */
     public function index()
     {
-        $orders = Orders::whereBetween('status',[5,8])->get();
+        $orders = Orders::whereBetween('status',[5,8])->orderBy('created_at', 'DESC')->get();
         //  dd($orders);
           return view('backend.orders.return_pro',compact('orders'));
     }
@@ -55,7 +55,7 @@ class ReturnProductsController extends Controller
         //$ordersproduct = OrdersProduct::where('order_id',$id)->first();
         //dd($orderss);
         return view('backend.orders.return_pro_details',compact('orderproduct','orders_re'));
-    
+
     }
 
     /**
@@ -77,7 +77,7 @@ class ReturnProductsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
         $fine = $request->late * 100;
         $order = Orders::find($id);
         $billing_deposit = $order->billing_deposit;
@@ -89,14 +89,14 @@ class ReturnProductsController extends Controller
         $order->status = 7;
         $order->save();
 
-        $orders_product = OrdersProduct::where('order_id',$id)->get(); 
+        $orders_product = OrdersProduct::where('order_id',$id)->get();
 
         foreach ($orders_product as $key => $value) {
             $product_atrr= ProductAtrr::where('products_id',$value->product_id)
                                               ->where('size',$value->size)
-                                              ->first();                                        
+                                              ->first();
             $product_atrr->stock = $product_atrr->stock + 1;
-            $product_atrr->save();                                    
+            $product_atrr->save();
         }
         // foreach ($request->id as $key => $value) {
         //     $fine = $request->late[$key] * 500;
@@ -122,10 +122,10 @@ class ReturnProductsController extends Controller
         //       }else {
         //         $order->save();
         //       }
-  
+
         //     }
         //   }
-        
+
         // $count = count($orders_product);
         // $num = 0;
         // foreach ($orders_product  as $order) {
@@ -150,5 +150,20 @@ class ReturnProductsController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function search($status){
+        $orders = Orders::where('status',$status)->orderBy('created_at', 'DESC')->get();
+        if($orders->count() > 0){
+            return view('backend.orders.return_pro',compact('orders'));
+        }else{
+            return back()->with('message','ไม่มีรายการที่ค้นหา');
+        }
+        // return view('backend.orders.index',compact('orders'));
+    }
+    public function succeed($id){
+        $order = Orders::find($id);
+        $order->status = 8;
+        $order->save();
+        return back();
     }
 }

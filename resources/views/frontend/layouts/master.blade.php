@@ -117,14 +117,14 @@
             FilePond.setOptions({
                 server: {
                     process: {
-                        url: './upload',
+                        url: '../upload',
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         }
                     },
                     revert: {
-                        url: './revert_slip',
+                        url: '../revert_slip',
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
@@ -150,14 +150,14 @@
             FilePond.setOptions({
                 server: {
                     process: {
-                        url: './upload',
+                        url: '../upload',
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'
                         }
                     },
                     revert: {
-                        url: './revert',
+                        url: '../revert',
                         method: 'POST',
                         headers: {
                             'X-CSRF-TOKEN': '{{ csrf_token() }}'

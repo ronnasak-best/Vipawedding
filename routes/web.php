@@ -67,6 +67,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::post('/revert', [OrderController::class,'delete_image'])->name('revert');
     Route::post('/revert_slip', [OrderController::class,'delete_image_slip'])->name('revert_slip');
     Route::post('/order_return/{id}',[OrderController::class,'upload_return']);
+    // Route::view('/update-password', 'auth.reset-password')->name('update-password');
     //Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
 });
 
@@ -94,11 +95,14 @@ Route::group(['prefix'=>'admin','middleware'=>['auth:sanctum',config('jetstream.
     Route::resource('/orderss', BackEndOrderController::class);
     Route::get('orderss/delete/{id}', [BackEndOrderController::class,'destroy'])->name('orderss.destroy');
     Route::get('orderss/cancel/{id}', [BackEndOrderController::class,'disPayment']);
+    Route::get('orderss/search/{status}', [BackEndOrderController::class,'search'])->name('orderss.search');
     Route::get('orderss/payment_confirm/{id}', [BackEndOrderController::class,'payment_confirm']);
     Route::post('/orderss/{id}', [BackEndOrderController::class,'ship_track'])->name('orderss.ship_track');
     Route::get('/orderss/order_back/{id}', [BackEndOrderController::class,'order_back']);
     // //ReturnPproducts
     Route::resource('/orders_re',ReturnProductsController::class);
+    Route::get('orders_re/search/{status}', [ReturnProductsController::class,'search'])->name('orders_re.search');
+    Route::get('orders_re/succeed/{id}', [ReturnProductsController::class,'succeed'])->name('orders_re.succeed');
     // //User
     // Route::resource('/user','UserController');
 

@@ -13,25 +13,25 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('category.index') }}">
-                    <span class="menu-title">Category</span>
+                    <span class="menu-title">ข้อมูลประเภทชุด</span>
                     <i class="mdi mdi-package menu-icon"></i>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('products.index') }}">
-                    <span class="menu-title">Products</span>
+                    <span class="menu-title">ข้อมูลชุด</span>
                     <i class="mdi mdi-tshirt-crew menu-icon"></i>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('orderss.index') }}">
-                    <span class="menu-title">Orders</span>
+                    <span class="menu-title">ข้อมูลการเช่า</span>
                     <i class="mdi mdi-library-books menu-icon"></i>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('orders_re.index') }}">
-                    <span class="menu-title">Return products</span>
+                    <span class="menu-title">ข้อมูลการคืน</span>
                     <i class="mdi mdi-backup-restore menu-icon"></i>
                 </a>
             </li>

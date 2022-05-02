@@ -76,7 +76,7 @@ class AddressController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

@@ -24,7 +24,7 @@
                     <hr style="border-top: 2px solid #eee;">
                     <div class="orderhead">
                         <div class="row mb-4">
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <table>
                                     <tbody>
                                         <tr class="mb-2">
@@ -35,6 +35,23 @@
                                             <td>วันที่คืน : </td>
                                             <td>&nbsp;&nbsp;{{ $orderss->endDate }}</td>
                                         </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-6">
+                                <table>
+                                    <tbody>
+                                        <tr class="mb-2">
+                                            <td>ค่าเช่า : </td>
+                                            <td>&nbsp;&nbsp;฿ {{ $orderss->billing_subtotal }}</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style="color: #ff0000;font-size: 18px;">เงินค่ามัดจำ : </td>
+                                            <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿ {{ $orderss->billing_deposit }}</td>
+                                        </tr>
+
+
                                     </tbody>
                                 </table>
                             </div>
@@ -83,7 +100,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <img class="img"
+                                                    <img class="img" style="width: 50%; height:50%"
                                                         src="{{ url('/') }}/slip/{{ $orderss['payment_slip'] }}"
                                                         alt="">
                                                 </div>
@@ -139,7 +156,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="ordertitle">
-                        ORDER NUMBER : {{ $orderss->id }}
+                        รายละเอียดการจัดส่ง
                     </div>
                     <hr style="border-top: 2px solid #eee;">
                     <div class="orderhead row">
@@ -163,7 +180,7 @@
                             <hr style="border-top: 2px solid #eee;">
                         </div>
 
-                        <div class="col-sm-12">
+                        {{-- <div class="col-sm-12">
                             <h5> Account</h5>
                             <table>
                                 <tbody>
@@ -181,7 +198,7 @@
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

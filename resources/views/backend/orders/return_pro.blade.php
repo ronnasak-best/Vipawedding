@@ -4,7 +4,17 @@
         <h3 class="page-title">
             <span class="page-title-icon bg-gradient-primary text-white mr-2">
                 <i class="mdi mdi-library-books"></i>
-            </span> Orders
+            </span> ข้อมูลการคืน ||
+            <a href="{{ route('orders_re.index') }}" class="btn btn-rounded btn-sm"
+                style="color: #ffffff; background-color: #007bff;">ทั้งหมด</a>
+            <a href="{{ route('orders_re.search', $status = 5) }}" class="btn btn-rounded btn-sm"
+                style="color: #ffffff; background-color: #dc3545;">รอการส่งคืน</a>
+            <a href="{{ route('orders_re.search', $status = 6) }}" class="btn btn-rounded btn-sm"
+                style="color: #212529; background-color: #ffc107;">รอตรวจสอบชุด</a>
+            <a href="{{ route('orders_re.search', $status = 7) }}" class="btn btn-rounded btn-sm"
+                style="color: #ffffff; background-color: #17a2b8;">รอจัดส่ง</a>
+            <a href="{{ route('orders_re.search', $status = 8) }}" class="btn btn-rounded btn-sm"
+                style="color: #ffffff; background-color: #28a745;">เสร็จสิ้น</a>
         </h3>
         <nav aria-label="breadcrumb">
         </nav>
@@ -37,6 +47,9 @@
                                     @elseif($order['status'] == 7)
                                         <span class="btn btn-rounded btn-sm"
                                             style="color: #ffffff; background-color: #17a2b8;">รอคืนเงิน</span>
+                                    @elseif($order['status'] == 8)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #28a745;">เสร็จสิ้น</span>
                                     @endif
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;"> <a
@@ -66,9 +79,10 @@
             </div>
         </div>
     </div>
+
     <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg" id="returnModal" tabindex="-1" role="dialog"
-        aria-labelledby="returnModalLabel" aria-hidden="true">
+    <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -77,8 +91,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <img class="img" src="" alt="">
+                <div class="modal-body ">
+                    <img style="width:50%; height: 50%;" class="img" src="" alt="">
                 </div>
             </div>
         </div>

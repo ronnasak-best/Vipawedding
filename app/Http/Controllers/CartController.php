@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use App\Models\Products;
@@ -36,25 +37,46 @@ class CartController extends Controller
     public function store(Request $request)
     {
         $product = $request->all();
-      if($product['size']=="")
-      {
-        return back()->with('message','Please select Size');
-      }else {
-        $sizeAtrr=explode("-",$product['size']);
-        $product['size']=$sizeAtrr[1];
-        $product = ['id' => $product['product_id'],
-                  'name' => $product['product_name'],
-                  'qty' => 1,
-                  'price' => $product['price'],
-                  'weight'=>1,
-                  'options' => ['image'=>$product['product_image'],                   
-                                'size'=>$product['size']
-                                ]
-                              ];
+        if ($product['size'] == "") {
+            return back()->with('message', 'โปรดเลือกขนาดชุด');
+        }
+        $sizeAtrr = explode("-", $product['size']);
+        $product['size'] = $sizeAtrr[1];
+        if (Cart::content()->count() > 0) {
+            foreach (Cart::content() as $cart) {
+                if ($cart->id == $product['product_id'] && $cart->options->size == $product['size']) {
+                    return back()->with('message', 'สินค้านี้มีอยู่ในตะกร้าแล้ว');
+                    exit;
+                }
+            }
+            $product = [
+                'id' => $product['product_id'],
+                'name' => $product['product_name'],
+                'qty' => 1,
+                'price' => $product['price'],
+                'weight' => 1,
+                'options' => [
+                    'image' => $product['product_image'],
+                    'size' => $product['size']
+                ]
+            ];
+            Cart::add($product);
+        } else {
+            $product = [
+                'id' => $product['product_id'],
+                'name' => $product['product_name'],
+                'qty' => 1,
+                'price' => $product['price'],
+                'weight' => 1,
+                'options' => [
+                    'image' => $product['product_image'],
+                    'size' => $product['size']
+                ]
+            ];
 
-        Cart::add($product);       
+            Cart::add($product);
+        }
         return redirect()->route('cart.index')->with('success_message', 'Item was added to your cart!');
-      }
     }
 
     /**

@@ -86,6 +86,10 @@ class OrderController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->image_slip=="") {
+            return back()->with('message','Please upload slip');
+          }
+
         $order = Orders::where('id',$id)->first();
         $order->status = 2;
         $order->payment_slip = $request->image_slip;

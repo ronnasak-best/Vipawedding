@@ -12,7 +12,8 @@
                     <div class="button-attached">
                         <button type="button" class="btn btn-primary button primary btn-block " data-toggle="modal"
                             data-target="#UploadModal" data-whatever="{{ $order['id'] }}">แนบหลักฐานการโอนเงิน</button>
-                        <a class="btn btn-danger order-cancel" href="{{route('orders.destroy',$order['id'])}}" class="btn btn-danger">ยกเลิก</a>
+                        <a class="btn btn-danger order-cancel" href="{{ route('orders.destroy', $order['id']) }}"
+                            class="btn btn-danger">ยกเลิก</a>
                     </div>
                 @elseif($order['status'] == 2)
                     <div class="button-attached">
@@ -36,7 +37,32 @@
         </div>
         <div class="card-order-header" style="background: #f3f3f3">
             <div class="order-header">
-                <spam class="title-text_detail">สถานะ weqwewqeqwe
+                <spam class="title-text_detail">สถานะ
+                    @if ($order['status'] == 0)
+                        <span class="btn btn-rounded btn-sm"
+                            style="color: #ffffff; background-color: #6c757d;">ยกเลิก</span>
+                    @elseif ($order['status'] == 1 || $order['status'] == 2)
+                        <span class="btn btn-rounded btn-sm"
+                            style="color: #212529; background-color: #ffc107;">รอชำระเงิน</span>
+                    @elseif($order['status'] == 3)
+                        <span class="btn btn-rounded btn-sm"
+                            style="color: #ffffff; background-color: #17a2b8;">รอจัดส่ง</span>
+                    @elseif($order['status'] == 4)
+                        <span class="btn btn-rounded btn-sm"
+                            style="color: #ffffff; background-color: #28a745;">จัดส่งแล้ว</span>
+                    @elseif($order['status'] == 5)
+                        <span class="btn btn-rounded btn-sm"
+                            style="color: #ffffff; background-color: #963859;">รอการส่งคืน</span>
+                    @elseif($order['status'] == 6)
+                        <span class="btn btn-rounded btn-sm"
+                            style="color: #212529; background-color: #ffc107;">รอตรวจสอบชุด</span>
+                    @elseif($order['status'] == 7)
+                        <span class="btn btn-rounded btn-sm"
+                            style="color: #ffffff; background-color: #17a2b8;">รอคืนเงิน</span>
+                    @elseif($order['status'] == 8)
+                        <span class="btn btn-rounded btn-sm"
+                            style="color: #ffffff; background-color: #28a745;">เสร็จสิ้น</span>
+                    @endif
                 </spam>
             </div>
             <div class="order-header">
@@ -68,6 +94,55 @@
 
 
         </div>
+        @if($order['status'] == 8)
+        <div class="card-order-header">
+            <div>
+               รายละเอียดค่าปรับ
+                <table>
+                    <tbody>
+                        <tr>
+                            <td style="color: #ff0000;font-size: 18px;">เงินคืนค่ามัดจำ(หักค่าปรับ) :
+                            </td>
+                            <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿
+                                {{ $order->billing_refund }}</td>
+                        </tr>
+                        <tr>
+                            <td>จำนวนเกินกำหนด(฿100/วัน) : </td>
+                            <td>&nbsp;&nbsp; {{ $order->late }} วัน</td>
+                        </tr>
+                        <tr>
+                            <td>ค่าปรับชุดชำรุด : </td>
+                            <td>&nbsp;&nbsp; ฿ {{ $order->other_fine }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="mr-4">
+                <div class="adadress"><svg style="width:24px;height:24px" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M11.5,1L2,6V8H21V6M16,10V17H19V10M2,22H21V19H2M10,10V17H13V10M4,10V17H7V10H4Z" />
+                </svg> บัญชีคืนเงินค่ามัดจำ</div>
+
+               <div class="ml-4 mt-2">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td class="address_head">ธนาคาร : </td>
+                            <td class="address-text">&nbsp;&nbsp;{{ $order->bank_name }}</td>
+                        </tr>
+                        <tr>
+                            <td class="address_head">ชื่อบัญชี : </td>
+                            <td class="address-text">&nbsp;&nbsp;{{ $order->account_name }}</td>
+                        </tr>
+                        <tr>
+                            <td class="address_head">เลขที่บัญชี</td>
+                            <td class="address-text">&nbsp;&nbsp;{{ $order->account_no }} </td>
+                        </tr>
+                    </tbody>
+                </table>
+               </div>
+            </div>
+        </div>
+        @endif
     </div>
     <div class="card mt-3">
         <div class="card-body" id="card_order_detail">
@@ -79,7 +154,7 @@
                         <div class="p-3  item-detail" style="width: 400px;">
                             <div class="font-weight-bold">{{ $ordersproduct->product['p_name'] }}</div>
                             <div style="font-size: 14px;" class="order-item-sub text-858585">
-                                {{ $ordersproduct->product['p_code']}}</div>
+                                {{ $ordersproduct->product['p_code'] }}</div>
                             <div style="font-size: 14px;" class="order-item-sub text-858585">SIZE :
                                 {{ $ordersproduct->size }}</div>
                         </div>

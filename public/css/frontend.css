@@ -852,3 +852,6 @@ button:disabled {
     display: flex;
     justify-content: flex-end;
 }
+.title-text_detail .btn-sm{
+    font-size:15px;
+}

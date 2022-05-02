@@ -44,18 +44,29 @@
                                             <td>ค่าเช่า : </td>
                                             <td>&nbsp;&nbsp;฿ {{ $orders_re->billing_subtotal }}</td>
                                         </tr>
-                                        @if ($orders_re['status'] == 7)
-                                        <tr>
-                                            <td style="color: #ff0000;font-size: 18px;">เงินคืนค่ามัดจำ(หักค่าปรับ) : </td>
-                                            <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿ {{ $orders_re->billing_refund }}</td>
-                                        </tr>
-                                        @elseif($orders_re['status'] == 6) 
-                                        <tr>
-                                            <td style="color: #ff0000;font-size: 18px;">เงินค่ามัดจำ : </td>
-                                            <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿ {{ $orders_re->billing_deposit }}</td>
-                                        </tr>
+                                        @if ($orders_re['status'] == 7 || $orders_re['status'] == 8)
+                                            <tr>
+                                                <td style="color: #ff0000;font-size: 18px;">เงินคืนค่ามัดจำ(หักค่าปรับ) :
+                                                </td>
+                                                <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿
+                                                    {{ $orders_re->billing_refund }}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>จำนวนเกินกำหนด(฿100/วัน) : </td>
+                                                <td>&nbsp;&nbsp; {{ $orders_re->late }} วัน</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ค่าปรับชุดชำรุด : </td>
+                                                <td>&nbsp;&nbsp; ฿ {{ $orders_re->other_fine }}</td>
+                                            </tr>
+                                        @elseif($orders_re['status'] == 6)
+                                            <tr>
+                                                <td style="color: #ff0000;font-size: 18px;">เงินค่ามัดจำ : </td>
+                                                <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿
+                                                    {{ $orders_re->billing_deposit }}</td>
+                                            </tr>
                                         @endif
-                                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -73,6 +84,9 @@
                                     @elseif($orders_re['status'] == 7)
                                         <span class="btn btn-rounded btn-sm"
                                             style="color: #ffffff; background-color: #17a2b8;">รอคืนเงิน</span>
+                                    @elseif($orders_re['status'] == 8)
+                                        <span class="btn btn-rounded btn-sm"
+                                            style="color: #ffffff; background-color: #28a745;">เสร็จสิ้น</span>
                                     @endif
                                 </div>
                                 @if ($orders_re['image_return_slip'] == true && $orders_re['status'] == 6)
@@ -82,7 +96,15 @@
                                             หลักฐานการจัดส่ง
                                         </button>
                                     </div>
+                                @elseif ($orders_re['status'] == 7)
+                                    <div class="col-sm-5">
+                                        <a href="{{ route('orders_re.succeed', $orders_re['id']) }}"
+                                            class="btn btn-outline-info btn-fw confirm_success ">
+                                            ยืนยันการโอนเงินคืน
+                                        </a>
+                                    </div>
                                 @endif
+
                             </div>
                             @if ($orders_re['image_return_slip'] == true && $orders_re['status'] == 6)
                                 <div class="payment_confirm row">
@@ -102,7 +124,7 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <img class="img"
+                                                        <img class="img" style="width:50%; height: 50%;"
                                                             src="{{ url('/') }}/slipShipping/{{ $orders_re['image_return_slip'] }}"
                                                             alt="">
                                                     </div>
@@ -170,15 +192,15 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <td>Bank Name : </td>
+                                        <td>ธนาคาร : </td>
                                         <td>&nbsp;&nbsp;{{ $orders_re->bank_name }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Account Name : </td>
+                                        <td>ชื่อบัญชี : </td>
                                         <td>&nbsp;&nbsp;{{ $orders_re->account_name }}</td>
                                     </tr>
                                     <tr>
-                                        <td>Account No.</td>
+                                        <td>เลขที่บัญชี.</td>
                                         <td>&nbsp;&nbsp;{{ $orders_re->account_no }} </td>
                                     </tr>
                                 </tbody>

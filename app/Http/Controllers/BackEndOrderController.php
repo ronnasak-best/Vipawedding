@@ -16,7 +16,7 @@ class BackEndOrderController extends Controller
      */
     public function index()
     {
-        $orders = Orders::whereBetween('status',[0,4])->get();
+        $orders = Orders::whereBetween('status',[0,4])->orderBy('created_at', 'DESC')->get();
         return view('backend.orders.index',compact('orders'));
     }
 
@@ -160,5 +160,14 @@ class BackEndOrderController extends Controller
         $order->status = 5;
         $order->save();
         return back();
+    }
+    public function search($status){
+        $orders = Orders::where('status',$status)->orderBy('created_at', 'DESC')->get();
+        if($orders->count() > 0){
+            return view('backend.orders.index',compact('orders'));
+        }else{
+            return back()->with('message','ไม่มีรายการที่ค้นหา');
+        }
+        // return view('backend.orders.index',compact('orders'));
     }
 }

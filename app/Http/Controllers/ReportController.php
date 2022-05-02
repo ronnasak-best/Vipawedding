@@ -35,10 +35,11 @@ class ReportController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
-         $data = Orders::where('status',1)->get();
-        //dd($data);
-        return response()->json("success", 200);
+
+        $startDate = $request->start;
+        $endDate = $request->end;
+        $data = Orders::whereDate('created_at','>=', $startDate)->whereDate('created_at','<=', $endDate)->get();
+        return response()->json($data, 200);
     }
 
     /**
@@ -87,7 +88,6 @@ class ReportController extends Controller
     }
     public function report_rant(Request $request)
     {
-
         $startDate = $request->start;
         $endDate = $request->end;
         $data = Orders::whereDate('created_at','>=', $startDate)->whereDate('created_at','<=', $endDate)->get();
