@@ -16,14 +16,15 @@
         <thead>
           <tr class="text-center">
             <th>ID</th>
-            <th>Image</th>
-            <th>Product Name</th>
-            <th>Category</th>
-            <th>Code</th>
-            <th>Color</th>
-            <th>Price</th>
-            <th>Image gallery</th>
-            <th>Add attribute</th>
+            <th>รูปภาพ</th>
+            <th>ชื่อชุด</th>
+            <th>ประเภทชุด</th>
+            <th>รหัสชุด</th>
+            <th>สีชุด</th>
+            <th>ราคา</th>
+            <th>สถานะ</th>
+            <th>คลังรูปภาพ</th>
+            <th>รายละเอียด</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -45,6 +46,13 @@
             <td>{{$product['p_color']}}</td>
             <td>{{$product['price']}}</td>
             <td>
+                @if($product['status']==0)
+                    <label class="badge badge-danger">DISABLED</label>
+                @else
+                    <label class="badge badge-success">ENABLED</label>
+                @endif
+              </td>
+            <td>
               <a href="{{route('Image-gallery.show',$product['id'])}}" class="btn btn-inverse-primary btn-sm">Images</a>
             </td>
             <td>
@@ -52,7 +60,6 @@
             </td>
             <td>
               <a href="{{route('products.edit',$product['id'])}}" class="btn btn-inverse-info btn-sm">Edit</a>
-              
             </td>
           </tr>
 

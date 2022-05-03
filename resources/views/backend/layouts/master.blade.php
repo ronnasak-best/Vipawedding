@@ -34,11 +34,12 @@
     <!-- End layout styles -->
     <style>
         img {
-          display: block;
-          margin-left: auto;
-          margin-right: auto;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
-        </style>
+
+    </style>
 
 
 </head>
@@ -85,7 +86,7 @@
             ordering: false,
             info: false,
         });
-        $('.confirm_success').on('click', function (e) {
+        $('.confirm_success').on('click', function(e) {
             e.preventDefault();
             const url = $(this).attr('href');
             Swal.fire({
@@ -284,6 +285,25 @@
                     $('#report2').removeClass('d-none');
                     var html = '';
                     $.each(data, function(key, v) {
+                        if (v.status == 0) {
+                            v.status = 'ยกเลิก'
+                        } else if (v.status == 1) {
+                            v.status = 'รอชำระเงิน'
+                        } else if (v.status == 2) {
+                            v.status = 'รอเช็คยอด'
+                        } else if (v.status == 3) {
+                            v.status = 'รอจัดส่ง'
+                        } else if (v.status == 4) {
+                            v.status = 'จัดส่งแล้ว'
+                        } else if (v.status == 5) {
+                            v.status = 'รอการส่งคืน'
+                        } else if (v.status == 6) {
+                            v.status = 'รอตรวจสอบชุด'
+                        } else if (v.status == 7) {
+                            v.status = 'รอคืนเงิน'
+                        } else if (v.status == 8) {
+                            v.status = 'เสร็จสิ้น'
+                        }
                         html +=
                             '<tr id="report-list">' +
                             '<td>' + v.id + '</td>' +

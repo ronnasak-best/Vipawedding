@@ -14,7 +14,7 @@ class IndexController extends Controller
     {
   //  $id = IdGenerator::generate(['table' => 'test', 'length' => 6, 'prefix' => date('y')]);
 
-      $products = Products::paginate(6);
+      $products = Products::where('status',1)->paginate(6);
       return view('frontend.product',compact('products'));
     }
     public function detialpro($id)
@@ -23,7 +23,7 @@ class IndexController extends Controller
       $imagesGalleries=Gallery::where('products_id',$id)->get();
       $totalStock=ProductAtrr::where('products_id',$id)->sum('stock');
       return view('frontend.product_details',compact('detail_product','imagesGalleries','totalStock'));
-    } 
+    }
     public function getAttrs(Request $request){
         $all_attrs=$request->all();
         //print_r($all_attrs);die();
@@ -39,12 +39,13 @@ class IndexController extends Controller
         $products = DB::table('products')
               ->join('categories','products.categories_id', '=', 'categories.id')
               ->where('categories.parent_id', '=', $id)
+              ->where('products.status',1)
               ->select('products.*')
              ->paginate(6);
              //dd($products);
       //  $products=Products::where('parent_id',$id)->paginate(6);
       }elseif ($ss==0) {
-        $products=Products::where('categories_id',$id)->paginate(6);
+        $products=Products::where('categories_id',$id)->where('status',1)->paginate(6);
       }
 
       // dd($products);

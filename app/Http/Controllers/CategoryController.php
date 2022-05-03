@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categoty = Category::all()->toArray();
+        $categoty = Category::orderBy('id', 'DESC')->get();
         //dd($categoty);
         return view('backend.category.index',compact('categoty'));
     }

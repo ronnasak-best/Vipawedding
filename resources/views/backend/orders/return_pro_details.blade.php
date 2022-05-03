@@ -188,7 +188,7 @@
                         </div>
 
                         <div class="col-sm-12">
-                            <h5> Account</h5>
+                            <h5> บัญชีคืนเงิน</h5>
                             <table>
                                 <tbody>
                                     <tr>
@@ -227,24 +227,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($orderproduct as $key => $value)
-                                <tr>
-                                    <td style="width:100px;">
-                                        <img src="{{ url('/') }}/products/{{ $value->product['image'] }}"
-                                            style="width: 100px; height:150px" class="rounded">
-                                    </td>
-                                    <td style="text-align: center; vertical-align: middle;">
-                                        <a>{{ $value->product['p_code'] }}</a>
-                                    </td>
-                                    <td style="text-align: center; vertical-align: middle;"><a>{{ $value->size }}</a><br>
-                                    </td>
-                                    <td style="text-align: center; vertical-align: middle;">
-                                        <textarea class="form-control" id="detail_fine" rows="4"></textarea>
-                                    </td>
-                                </tr>
-                            @endforeach
+                            <form action="{{ route('orders_re.detail_fine', $orders_re['id']) }}">
+                                @foreach ($orderproduct as $key => $value)
+                                    <input type="hidden" name="id[]" value="{{ $value->id }}">
+                                    <tr>
+                                        <td style="width:100px;">
+                                            <img src="{{ url('/') }}/products/{{ $value->product['image'] }}"
+                                                style="width: 100px; height:150px" class="rounded">
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                            <a>{{ $value->product['p_code'] }}</a>
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                            <a>{{ $value->size }}</a><br>
+                                        </td>
+                                        <td style="text-align: center; vertical-align: middle;">
+                                            <textarea class="form-control" name="detail_fine[]" rows="4">{{$value->fine_detail}}</textarea>
+                                        </td>
+                                    </tr>
+                                @endforeach
                         </tbody>
                     </table>
+                    <div class="d-flex justify-content-end">
+                        <input class="btn btn-gradient-info " type="submit" value="บันทึก">
+                    </div>
+
+                    </form>
                 </div>
             </div>
         </div>

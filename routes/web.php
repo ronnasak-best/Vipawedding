@@ -108,6 +108,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth:sanctum',config('jetstream.
     Route::resource('/orders_re',ReturnProductsController::class);
     Route::get('orders_re/search/{status}', [ReturnProductsController::class,'search'])->name('orders_re.search');
     Route::get('orders_re/succeed/{id}', [ReturnProductsController::class,'succeed'])->name('orders_re.succeed');
+    Route::get('orders_re/detail_fine/{id}', [ReturnProductsController::class,'detail_fine'])->name('orders_re.detail_fine');
     // //User
     // Route::resource('/user','UserController');
 

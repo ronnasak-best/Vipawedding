@@ -166,4 +166,13 @@ class ReturnProductsController extends Controller
         $order->save();
         return back();
     }
+    public function detail_fine(Request $request, $id){
+        $request_data = $request->all();
+        foreach($request_data['id'] as $key => $value){
+            $orders_product = OrdersProduct::find($value);
+            $orders_product->fine_detail = $request_data['detail_fine'][$key];
+            $orders_product->save();
+        }
+        return back();
+    }
 }

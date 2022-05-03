@@ -22,7 +22,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Category Name :</label>
             <div class="col-sm-12">
-              <input type="text" name="name" class="form-control" id="exampleInputUsername2" >
+              <input type="text" name="name" class="form-control" id="exampleInputUsername2" required>
            </div>
         </div>
         <div class="form-group row">
@@ -49,7 +49,7 @@
         <div class="form-group row">
           <label  class="col-sm-3 col-form-label">Description :</label>
             <div class="col-sm-12">
-              <textarea name="description" id="editor"></textarea>
+              <textarea name="description" id="editor" required></textarea>
            </div>
         </div>
         <div class="form-group row">

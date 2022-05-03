@@ -22,7 +22,7 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Product Name :</label>
             <div class="col-sm-12">
-              <input type="text" name="p_name" class="form-control" id="exampleInputUsername2" >
+              <input type="text" name="p_name" class="form-control" id="exampleInputUsername2" required>
            </div>
         </div>
         <div class="form-group row">
@@ -49,26 +49,26 @@
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Code Porduct  :</label>
             <div class="col-sm-12">
-              <input type="text" name="p_code" class="form-control" id="exampleInputUsername2" >
+              <input type="text" name="p_code" class="form-control" id="exampleInputUsername2" required>
            </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-3 col-form-label">Color :</label>
             <div class="col-sm-12">
-              <input type="text" name="p_color" class="form-control" id="coler" >
+              <input type="text" name="p_color" class="form-control" id="coler" required>
            </div>
         </div>
         <div class="form-group row">
           <label  class="col-sm-3 col-form-label">Description :</label>
             <div class="col-sm-12">
-              <textarea name="description" id="summernote"></textarea>
+              <textarea name="description" id="summernote" required></textarea>
            </div>
         </div>
 
         <div class="form-group row">
           <label class="col-sm-10 col-form-label">Price:</label>
           <div class="input-group col-sm-4">
-            <input type="number" min="0" name="price" class="form-control" aria-label="Amount (to the nearest dollar)">
+            <input type="number" min="0" name="price" class="form-control" aria-label="Amount (to the nearest dollar)" required>
             <div class="input-group-prepend">
               <span class="input-group-text bg-gradient-primary text-white">฿</span>
             </div>
@@ -80,14 +80,25 @@
           <label class="col-sm-3 col-form-label">File upload :</label>
           <input type="file" name="image" id="image"class="file-upload-default" multiple>
           <div class="input-group col-sm-12">
-            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image" required>
             <span class="input-group-append">
               <button class="file-upload-browse btn btn-gradient-primary" type="button">Upload</button>
             </span>
           </div>
         </div>
-
-
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Status :</label>
+            <div class="col-sm-3">
+              <div class="form-check">
+                <input type="radio" class="form-check-input" name="status" id="membershipRadios1" value="1" checked> Enabled
+              </div>
+            </div>
+            <div class="col-sm-2.5">
+              <div class="form-check">
+                <input type="radio" class="form-check-input" name="status" id="membershipRadios2" value="0"> Disabled
+              </div>
+            </div>
+          </div>
         <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
       </form>
     </div>

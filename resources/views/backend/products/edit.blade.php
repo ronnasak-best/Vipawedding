@@ -88,7 +88,19 @@
           </div>
         </div>
 
-
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Status :</label>
+            <div class="col-sm-3">
+              <div class="form-check" >
+                <input type="radio" class="form-check-input" name="status" id="membershipRadios1" value="1" {{($pro->status==0)?'':'checked'}}> Enabled
+              </div>
+            </div>
+            <div class="col-sm-2.5">
+              <div class="form-check">
+                <input type="radio" class="form-check-input" name="status" id="membershipRadios2" value="0" {{($pro->status==1)?'':'checked'}}> Disabled
+              </div>
+            </div>
+          </div>
 
         <button type="submit" class="btn btn-gradient-primary mr-2">Submit</button>
       </form>
