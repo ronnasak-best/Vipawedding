@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductAtrrController;
 use App\Http\Controllers\BackEndOrderController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\PDFController;
 use Laravel\Fortify\Http\Controllers\PasswordController;
 
 
@@ -74,6 +75,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     // Route::put('/user/password', [PasswordController::class, 'update'])
     //         ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
     //         ->name('user-password.update');
+    Route::get('/receipt/{id}', [PDFController::class,'show'])->name('receipt.show');
 });
 
 

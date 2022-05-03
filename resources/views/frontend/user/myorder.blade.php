@@ -32,6 +32,10 @@
                             data-toggle="modal" data-target="#ShowReturnModal" data-whatever="{{ $order['id'] }}"
                             data-img_r="{{ $order->image_return_slip }}">หลักฐานการจัดส่งคืน</button>
                     </div>
+                @elseif ($order['status'] == 8)
+                    <div class="button-attached">
+                        <a href="{{route('receipt.show',$order['id'])}}" type="button" class="btn btn-outline-secondary button primary btn-block">PDF</a>
+                    </div>
                 @endif
             </div>
         </div>
