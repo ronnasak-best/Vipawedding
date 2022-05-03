@@ -23,7 +23,7 @@ class IndexController extends Controller
       $imagesGalleries=Gallery::where('products_id',$id)->get();
       $totalStock=ProductAtrr::where('products_id',$id)->sum('stock');
       return view('frontend.product_details',compact('detail_product','imagesGalleries','totalStock'));
-    }
+    } 
     public function getAttrs(Request $request){
         $all_attrs=$request->all();
         //print_r($all_attrs);die();

@@ -20,9 +20,9 @@
                 </div>
             </div>
             <div class="sub-menu-account profile" id="profileDetail">
-                <a href="{{route('myaccount.index')}}" class="sub-menu-item profile detail">
+                <a href="{{route('user-profile')}}" class="sub-menu-item user-profile detail">
                     ข้อมูลส่วนตัว </a>
-                <a href="{{route('myaccount.index')}}" class="sub-menu-item profile detail"> ที่อยู่จัดส่งสินค้า
+                <a href="{{route('myaccount.index')}}" class="sub-menu-item myaccount-profile detail"> ที่อยู่จัดส่งสินค้า
                 </a>
             </div>
             <a href="{{ route('orders.index') }}">

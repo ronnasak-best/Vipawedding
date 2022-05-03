@@ -226,9 +226,12 @@
             // $('.sub-menu-item.profile').addClass('active');
             $('.menu-account-item.orderlist-menu').addClass('active');
         } else if (window.location.pathname == '/myaccount') {
-            $('.sub-menu-item.profile').addClass('active');
-
+            $('.sub-menu-item.myaccount-profile').addClass('active');
+        }else if (window.location.pathname == '/user-profile') {
+            $('.sub-menu-item.user-profile').addClass('active');
         }
+
+
     </script>
 
 </body>

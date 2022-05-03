@@ -16,6 +16,7 @@ use App\Http\Controllers\ProductAtrrController;
 use App\Http\Controllers\BackEndOrderController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\ReportController;
+use Laravel\Fortify\Http\Controllers\PasswordController;
 
 
 
@@ -59,6 +60,7 @@ Route::get('/province/{province_code}/amphoe/{amphoe_code}/district/{district_co
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function () {
     Route::resource('/myaccount', AddressController::class);
+    Route::get('/user-profile', [AddressController::class,'user_profile'])->name('user-profile');
     Route::resource('/check-out',CheckoutController::class);
     //Route::post('/payment','CheckoutController@payment');
     Route::resource('/orders', OrderController::class);
@@ -69,6 +71,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::post('/order_return/{id}',[OrderController::class,'upload_return']);
     // Route::view('/update-password', 'auth.reset-password')->name('update-password');
     //Route::get('/dashboard', function () {return view('dashboard');})->name('dashboard');
+    // Route::put('/user/password', [PasswordController::class, 'update'])
+    //         ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
+    //         ->name('user-password.update');
 });
 
 

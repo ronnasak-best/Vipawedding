@@ -57,7 +57,25 @@ class CheckoutController extends Controller
             //dd((double)$total);
             $id = IdGenerator::generate(['table' => 'orders', 'length' => 10, 'prefix' => 'WD']);
             //$id = IdGenerator::generate(['table' => 'orders', 'length' => 10, 'prefix' =>'WD']);
-            $order = Orders::create([
+                // Insert into order_product table
+                foreach (Cart::content() as $item) {
+                    $product_atrr = ProductAtrr::where('products_id',$item->id)
+                                                ->where('size',$item->options->size)
+                                                ->first();
+                    if($product_atrr->stock < $item->qty){
+                        return back()->with('message','สินค้าหมด');
+                    }
+                    $product_atrr->stock = $product_atrr->stock - $item->qty;
+                    $product_atrr->save();
+                    OrdersProduct::create([
+                        'order_id' => $id,
+                        'product_id' => $item->id,
+                        'size' => $item->options->size,
+                        'quantity' => $item->qty,
+                    ]);
+                }
+                Cart::destroy();
+                $order = Orders::create([
                     'id' => $id,
                     'user_id' => auth()->user()->id ,
                     'billing_name' => "$address->name",
@@ -74,22 +92,6 @@ class CheckoutController extends Controller
                     'billing_total' => $total,
                 ]);
 
-                // Insert into order_product table
-                foreach (Cart::content() as $item) {
-
-                    $product_atrr = ProductAtrr::where('products_id',$item->id)
-                                                ->where('size',$item->options->size)
-                                                ->first();
-                    $product_atrr->stock = $product_atrr->stock - $item->qty;
-                    $product_atrr->save();
-                    OrdersProduct::create([
-                        'order_id' => $id,
-                        'product_id' => $item->id,
-                        'size' => $item->options->size,
-                        'quantity' => $item->qty,
-                    ]);
-                }
-                Cart::destroy();
                 return redirect()->route('orders.index')->with('Thank you! Your payment has been successfully accepted!');
             }
 

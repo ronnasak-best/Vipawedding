@@ -47,7 +47,9 @@
                         <select class="custom-select col-sm-6 pl-0" name="size" id="idSize">
                             <option value="">Select Size</option>
                             @foreach($detail_product->attributes as $attrs)
+                            @if ($attrs['stock'] > 0)
                             <option value="{{$detail_product['id']}}-{{$attrs['size']}}">{{$attrs['size']}}</option>
+                            @endif
                             @endforeach
                         </select>
                     </div>

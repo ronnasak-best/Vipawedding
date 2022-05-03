@@ -136,4 +136,10 @@ class AddressController extends Controller
         Address::find($id)->delete();
         return response(['message'=>'=Delete Success!'], 200);
     }
+    public function user_profile()
+    {
+        $id=auth()->user()->id;
+        $address = Address::where('users_id',$id)->orderBy('default_address','desc')->get();
+        return view('frontend.user.user-profile',compact('address'));
+    }
 }
