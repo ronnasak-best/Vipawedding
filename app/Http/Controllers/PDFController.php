@@ -15,8 +15,8 @@ class PDFController extends Controller
     public function show($id){
         $order=Orders::find($id);
         $client = new Party([
-            'name'          => 'Roosevelt Lloyd',
-            'phone'         => '(520) 318-9486',
+            'name'          => $order->billing_name,
+            'phone'         => $order->billing_address,
             'custom_fields' => [
                 'note'        => 'IDDQD',
                 'business id' => '365#GG',
@@ -53,8 +53,8 @@ class PDFController extends Controller
             ->date(now()->subWeeks(3))
             ->dateFormat('m/d/Y')
             ->payUntilDays(14)
-            ->currencySymbol('$')
-            ->currencyCode('USD')
+            ->currencySymbol('฿')
+            ->currencyCode('THB')
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->currencyThousandsSeparator('.')
             ->currencyDecimalPoint(',')
