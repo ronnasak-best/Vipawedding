@@ -19,7 +19,7 @@
                         <span class="btn-status status-return"> รอการส่งกลับ</span>
                     @elseif ($order['status'] == 6 || $order['status'] == 7)
                         <span class="btn-status status-waiting"> รอการตรวจสอบ</span>
-                        @elseif ($order['status'] == 8 )
+                    @elseif ($order['status'] == 8)
                         <span class="btn-status " style="color: #ffffff; background-color: #28a745;">เสร็จสิ้น</span>
                     @endif
                 </div>
@@ -34,12 +34,26 @@
                 <div style="width: 300px;">
                     <div class="d-flex-between">
                         <div>
-                            <div class="font-weight-bold">ยอดสุทธิ</div>
-                            <div style="font-size: 12px;">(รวมภาษีมูลค่าเพิ่ม)</div>
+                            <div>
+                                <div class="font-weight-bold">ค่าเช่า</div>
+                            </div>
+                            <div>
+                                <div class="font-weight-bold">ค่ามัดจำ</div>
+                            </div>
+                            <div>
+                                <div class="font-weight-bold">ยอดสุทธิ</div>
+                                <div style="font-size: 12px;">(รวมภาษีมูลค่าเพิ่ม)</div>
+                            </div>
                         </div>
                         <div>
+                            <div class="font-weight-bold" style="color: #ff0000;font-size: 22px;">
+                                ฿{{ number_format($order['billing_subtotal']) }}
+                            </div>
+                            <div class="font-weight-bold" style="color: #ff0000;font-size: 22px;">
+                                ฿{{ number_format($order['billing_deposit']) }}
+                            </div>
                             <div class="font-weight-bold" style="color: #0066DD;font-size: 22px;">
-                                ฿{{ $order['billing_total'] }}
+                                ฿{{ number_format($order['billing_total']) }}
                             </div>
                         </div>
                     </div>
@@ -59,7 +73,8 @@
                     @elseif($order['status'] == 5)
                         <div class="button-attached">
                             <button type="button" class="btn btn-danger button danger btn-block mt-3" data-toggle="modal"
-                                data-target="#returnModal" data-whatever="{{ $order['id'] }}">แนบหลักฐานการจัดส่งคืน</button>
+                                data-target="#returnModal"
+                                data-whatever="{{ $order['id'] }}">แนบหลักฐานการจัดส่งคืน</button>
                         </div>
                     @elseif($order['status'] == 6)
                         <div class="button-attached">

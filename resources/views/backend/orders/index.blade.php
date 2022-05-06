@@ -24,7 +24,7 @@
                             <th style="text-align: center; vertical-align: middle;">สถานะ</th>
                             <th style="text-align: center; vertical-align: middle;">เลขที่</th>
                             <th style="text-align: center; vertical-align: middle;">วันที่สั่งเช่า</th>
-                            <th style="text-align: center; vertical-align: middle;">จำนวนเงิน</th>
+                            <th  style="text-align: center; vertical-align: middle;" >จำนวนเงิน</th>
                             <th style="text-align: center; vertical-align: middle;">Uplode Slip</th>
                             <th style="text-align: center; vertical-align: middle;">status</th>
                         </tr>
@@ -56,7 +56,7 @@
                                 <td style="text-align: center; vertical-align: middle;"> <a
                                         href="{{ route('orderss.show', $order['id']) }}">{{ $order['id'] }}</a> </td>
                                 <td style="text-align: center; vertical-align: middle;">{{ $order['created_at'] }}</td>
-                                <td style="text-align: center; vertical-align: middle;"> {{ $order['billing_total'] }}
+                                <td style="text-align: center; vertical-align: middle;"> {{number_format($order['billing_total'])}}
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;">
                                     @if ($order['payment_slip'] == true)

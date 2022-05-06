@@ -43,14 +43,17 @@
                                     <tbody>
                                         <tr class="mb-2">
                                             <td>ค่าเช่า : </td>
-                                            <td>&nbsp;&nbsp;฿ {{ $orderss->billing_subtotal }}</td>
+                                            <td>&nbsp;&nbsp;฿ {{number_format($orderss->billing_subtotal)}}</td>
                                         </tr>
 
                                         <tr>
                                             <td style="color: #ff0000;font-size: 18px;">เงินค่ามัดจำ : </td>
-                                            <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿ {{ $orderss->billing_deposit }}</td>
+                                            <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿ {{number_format($orderss->billing_deposit)}}</td>
                                         </tr>
-
+                                        <tr>
+                                            <td style="color: #ff0000;font-size: 18px;">ยอดรวม : </td>
+                                            <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿ {{number_format($orderss->billing_total)}}</td>
+                                        </tr>
 
                                     </tbody>
                                 </table>

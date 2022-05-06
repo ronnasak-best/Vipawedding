@@ -42,6 +42,7 @@
         <div class="card-order-header" style="background: #f3f3f3">
             <div class="order-header">
                 <spam class="title-text_detail">สถานะ
+
                     @if ($order['status'] == 0)
                         <span class="btn btn-rounded btn-sm"
                             style="color: #ffffff; background-color: #6c757d;">ยกเลิก</span>

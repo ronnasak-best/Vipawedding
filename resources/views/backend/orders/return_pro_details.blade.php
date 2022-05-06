@@ -42,14 +42,14 @@
                                     <tbody>
                                         <tr class="mb-2">
                                             <td>ค่าเช่า : </td>
-                                            <td>&nbsp;&nbsp;฿ {{ $orders_re->billing_subtotal }}</td>
+                                            <td>&nbsp;&nbsp;฿ {{number_format( $orders_re->billing_subtotal)}}</td>
                                         </tr>
                                         @if ($orders_re['status'] == 7 || $orders_re['status'] == 8)
                                             <tr>
                                                 <td style="color: #ff0000;font-size: 18px;">เงินคืนค่ามัดจำ(หักค่าปรับ) :
                                                 </td>
                                                 <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿
-                                                    {{ $orders_re->billing_refund }}</td>
+                                                    {{ number_format($orders_re->billing_refund )}}</td>
                                             </tr>
                                             <tr>
                                                 <td>จำนวนเกินกำหนด(฿100/วัน) : </td>
@@ -63,7 +63,7 @@
                                             <tr>
                                                 <td style="color: #ff0000;font-size: 18px;">เงินค่ามัดจำ : </td>
                                                 <td style="color: #ff0000;font-size: 18px;">&nbsp;&nbsp;฿
-                                                    {{ $orders_re->billing_deposit }}</td>
+                                                    {{ number_format($orders_re->billing_deposit)}}</td>
                                             </tr>
                                         @endif
 

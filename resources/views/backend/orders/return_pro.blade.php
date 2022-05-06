@@ -55,8 +55,8 @@
                                 <td style="text-align: center; vertical-align: middle;"> <a
                                         href="{{ route('orders_re.show', $order['id']) }}">{{ $order['id'] }}</a> </td>
                                 <td style="text-align: center; vertical-align: middle;">{{ $order['created_at'] }}</td>
-                                <td style="text-align: center; vertical-align: middle;"> {{ $order['billing_total'] }}
-                                <td style="text-align: center; vertical-align: middle;"> {{ $order['billing_deposit'] }}
+                                <td style="text-align: center; vertical-align: middle;"> {{ number_format($order['billing_total'] )}}
+                                <td style="text-align: center; vertical-align: middle;"> {{ number_format($order['billing_deposit']) }}
                                 </td>
                                 <td style="text-align: center; vertical-align: middle;">
                                     @if ($order['image_return_slip'] == true)
